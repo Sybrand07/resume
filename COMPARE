@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybrand Engelbrecht's Professional Website</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body class="homepage"> <!-- Add class "homepage" -->
+    <header class="header"> <!-- Added class "header" -->
+        <h1>Welcome to Sybrand Engelbrecht's Professional Website</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about-me.html">About Me</a>
+                <ul>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                </ul>
+            </li>
+            <li><a href="resources.html">Resources</a>
+                <ul>
+                    <li><a href="presentations.html">Presentations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                </ul>
+            </li>
+            <li><a href="contact-me.html">Contact</a>
+                <ul>
+                    <li><a href="contact-me.html">Contact Me</a></li>
+                    <li><a href="references.html">References</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="home" class="section">
+        <div class="angled-crop">
+            <img src="images/couple-photo.jpg" alt="Home Image">
+        </div>
+        <div class="overlay-text">
+            <h2>Scientific Researcher</h2>
+            <p>Explore my profile and discover more about my skills and experiences.</p>
+            <a href="#about-me" class="scroll-btn">Learn More</a>
+        </div>
+    </section>
+
+    <section id="about-me" class="section">
+        <div class="angled-crop">
+            <img src="images/profile-pic.jpg" alt="About Me Image"> 
+        <div class="overlay-text">
+            <h2>About Me</h2>
+            <p>Content for the About Me section goes here...</p>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <div class="angled-crop">
+            <img src="images/wedding-party.jpg" alt="Education Image">
+            <div class="overlay-text">
+                <h2>Education</h2>
+                <p>Content for the Education section goes here...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add similar sections for Experience, Skills, Presentations, Publications, and Contact -->
+
+    <footer class="footer"> <!-- Add class "footer" -->
+        <p>&copy; 2024 Sybrand Engelbrecht. All rights reserved.</p>
+        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+    </footer>
+</body>
+</html>

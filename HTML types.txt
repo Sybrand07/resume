@@ -1,0 +1,115 @@
+<div>: Division or container element
+<span>: Inline container element
+<p>: Paragraph
+<a>: Anchor (hyperlink)
+<img>: Image
+<ul>: Unordered list
+<ol>: Ordered list
+<li>: List item
+<nav>: Navigation
+<header>: Header section
+<footer>: Footer section
+<section>: Generic section
+<article>: Article section
+<aside>: Sidebar content
+<form>: Form
+<input>: Input field
+<button>: Button
+<textarea>: Text input area
+<select>: Dropdown select box
+<iframe>: Inline frame
+<h1> to <h6>: Headings of different levels
+<table>: Table
+<tr>: Table row
+<th>: Table header cell
+<td>: Table data cell
+<caption>: Table caption
+<thead>: Table head
+<tbody>: Table body
+<tfoot>: Table footer
+<form>: Form
+<fieldset>: Fieldset for grouping form elements
+<legend>: Caption for a fieldset
+<label>: Label for form elements
+<input>: Input field
+<textarea>: Text input area
+<select>: Dropdown select box
+<option>: Option within a select box
+<button>: Button
+<blockquote>: Block quotation
+<cite>: Citation
+<abbr>: Abbreviation
+<address>: Contact information
+<hr>: Horizontal rule
+<br>: Line break
+<iframe>: Inline frame
+<audio>: Audio content
+<video>: Video content
+<source>: Media source for <audio> and <video>
+<track>: Text track for <audio> and <video>
+<canvas>: Drawing area
+<strong>: Strong importance, typically bold
+<em>: Emphasis, typically italic
+<b>: Bold text
+<i>: Italic text
+<u>: Underlined text
+<s>: Strikethrough text
+<mark>: Marked or highlighted text
+<code>: Inline code snippet
+<pre>: Preformatted text
+<blockquote>: Block quotation
+<q>: Inline quotation
+<cite>: Title of a work (e.g., a book, a movie)
+<sub>: Subscript text
+<sup>: Superscript text
+<abbr>: Abbreviation or acronym
+<time>: Represents a specific period in time
+<del>: Deleted text
+<ins>: Inserted text
+<small>: Smaller text
+<big>: Larger text
+<kbd>: Represents user input
+<samp>: Sample output from a program
+<var>: Represents a variable in programming or mathematics
+<progress>: Progress bar
+<meter>: Scalar measurement within a known range
+<details>: Represents a disclosure widget to show/hide additional information
+<summary>: Represents a summary, caption, or legend for a <details> element
+<dialog>: Represents a dialog box or window
+<menu>: Represents a group of commands
+<menuitem>: Represents a command that a user is able to invoke
+<slot>: Represents a placeholder where the content can be inserted in a web component
+<template>: Represents inert content that can be activated later by script
+<shadow>: Represents a shadow DOM tree, which can be attached to elements to encapsulate their style and structure
+<keygen>: Represents a key-pair generator control used for cryptographic purposes
+<bdi>: Represents a span of text that is to be isolated from its surrounding text directionality
+<bdo>: Overrides the Unicode bidirectional algorithm for the content within
+<ruby>: Represents a ruby annotation for pronunciation or translation
+<rtc>: Represents text that is to be displayed with ruby annotations, used in conjunction with <ruby>
+<math>: Represents mathematical content in HTML, intended for MathML markup
+<svg>: Represents Scalable Vector Graphics content, used for creating vector-based graphics on the web
+<iframe>: Represents an inline frame, which allows another HTML document to be embedded within the current document
+<map>: Defines an image map, which is used to associate different areas of an image with different hyperlinks
+<area>: Defines a clickable area within an image map
+<applet>: Deprecated element used to embed Java applets in HTML documents
+<base>: Specifies the base URL/target for all relative URLs in a document
+<basefont>: Deprecated element used to specify the default font, color, and size for text in a document
+<font>: Deprecated element used to specify font-related attributes such as size and color
+<frame>: Deprecated element used to define a subwindow (frame) within a frameset
+<frameset>: Deprecated element used to define a set of frames within a frameset
+<noframes>: Deprecated element used to provide alternate content for browsers that do not support frames
+<noscript>: Provides alternate content for users who have disabled scripts in their browser or have a browser that doesn't support scripting
+<object>: Embeds external resources such as images, audio, video, Java applets, and other types of multimedia into an HTML document
+<param>: Defines parameters for the <object> element
+<script>: Embeds or links to client-side scripts such as JavaScript within an HTML document
+<style>: Contains CSS rules for styling HTML elements
+<title>: Defines the title of the HTML document, which appears in the browser's title bar or tab
+<meta>: Provides metadata about the HTML document such as character encoding, viewport settings, and author information
+<link>: Links external resources such as stylesheets or icon files to the HTML document
+<head>: Contains metadata and other header elements for the HTML document
+<body>: Contains the main content of the HTML document
+<html>: Represents the root element of an HTML document
+<!DOCTYPE>: Defines the document type and version of HTML being used
+<!-- -->: Defines a comment within an HTML document
+<!ENTITY>: Defines an external entity reference, typically used in XML documents
+<!ATTLIST>: Defines attribute list declarations within a document type definition (DTD)

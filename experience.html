@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybrand Engelbrecht - Experience</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <!-- Add any additional meta tags, CSS links, or JavaScript scripts here -->
+</head>
+
+<body class="section-other"> <!-- Add class "homepage" -->
+    <header class="header"> <!-- Added class "header" -->
+        <div class="top-header">
+            <div class="slash"></div>
+            <div class="left-section">
+                <div class="name">
+                    <div>Experience</div>
+                </div>
+            </div>
+            <div class="slash"></div>
+       
+   
+
+            <nav> <!--  represents the navigation bar, containing a list of links. -->
+                <ul> <!--  represents an unordered list, which is used to create the list of navigation items. -->
+                    <li><a href="index.html">Home</a></li> <!--  <li> represents list items, which are individual items within the navigation list. -->
+                    <li><a href="about-me.html">About Me</a> <!--  <a> represents anchor tags, which are used to create hyperlinks within the navigation items. -->
+                        <ul> <!--   selects the unordered lists that are nested within list items (submenus) and styles them. -->
+                            <li><a href="video-resume.html">Video Resume</a></li>
+                            <li><a href="education.html">Education</a></li>
+                            <li><a href="experience.html">Experience</a></li>
+                            <li><a href="skills.html">Skills</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="resources.html">Resources</a>
+                        <ul>
+                            <li><a href="presentations.html">Presentations</a></li>
+                            <li><a href="publications.html">Publications</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact-me.html">Contact</a>
+                        <ul>
+                            <li><a href="contact-me.html">Contact Me</a></li>
+                            <li><a href="references.html">References</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="experience" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <div class="angled-crop-top-negative" onmousemove="showTooltip(event)" onmouseout="hideTooltip()">
+            <img src="images/experience-page.jpg" alt="Experience Image">
+            <div id="tooltip" class="tooltip">Clinical trial design summaries made upon request for AstraZeneca's global medical affairs oncology portfolio.</div> 
+        </div>
+    </section>
+
+    <script>
+        function showTooltip(event) {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "block"; // Show the tooltip
+            tooltip.style.left = (event.pageX - tooltip.offsetWidth / 2) + "px"; // Adjust tooltip's left position
+            tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + "px"; // Adjust tooltip's top position
+        }
+        
+        function hideTooltip() {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "none"; // Hide the tooltip
+        }
+    </script>
+
+    <section id="work-experience" class="content-section">
+        <div class="work-experience">
+            <h3>Postgraduate Researcher</h3>
+            <h2>Stellenbosch University</h2>
+            <p><strong>Feb 2014 – Feb 2019 (5 years)</strong></p>
+            <ul class="bulleted-list">
+                <li><strong>Technical expertise:</strong></li>
+                <ul>
+                    <li>in vitro models: cell culturing (H9C2, COS-1, CHO-K1), flow cytometry, fluorescent microscopy, radio scintillation, western blot, ELISA, restriction digestion, LC/MS</li>
+                    <li>ex vivo models: working heart perfusions, cardiomyocyte isolation, oxygraphy</li>
+                    <li>in vivo models: oral glucose tolerance test, animal handling</li>
+                </ul>
+                <li><strong>Special responsibilities:</strong></li>
+                <ul>
+                    <li>supervising research team</li>
+                    <li>laboratory demonstrations and workshops</li>
+                    <li>teaching assistance and training</li>
+                </ul>
+                <li><strong>Highlights:</strong></li>
+                <ul>
+                    <li>NRF doctoral innovation scholarship</li>
+                    <li>first author of two publications in international journals</li>
+                    <li>10+ presentations at local and international conferences (see attached)</li>
+                    <li>facilitated process improvements for western blotting protocol, including antibody cocktails and rolling exposure</li>
+                    <li>introducing humane delivery system for treatment</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="work-experience">
+            <h3>Associate Medical Writer</h3>
+            <h2>Ashfield Medcomms, an Inizio Company</h2>
+            <p><strong>May 2022 – May 2023 (1 year)</strong></p>
+            <ul class="bulleted-list">
+                <li>Contributed to AstraZeneca's global medical affairs portfolio on oncology</li>
+                <li>Produced the following content:</li>
+                <ul>
+                    <li>quarterly clinical trial updates of externally sponsored research</li>
+                    <li>profitability insights for companion diagnostics (Dato-Dxd)</li>
+                    <li>100+ clinical trial design summaries</li>
+                    <li>abstracts, posters and keynote speaker slides for cancer research conferences (ESMO, ASCO GU/GI, AACR, SABCS)</li>
+                    <li>MSL training on transarterial chemoembolization [TACE]</li>
+                    <li>‘playbooks’ of prominent oncologists to be recruited as KOLs</li>
+                </ul>
+                <li>Facilitated process improvements of information flow:</li>
+                <ul>
+                    <li>Excel conditional formatting for automating updates of clinical trial data from clients, saving time and resources</li>
+                    <li>AI script for tabulating trial data and generating concise summaries</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="work-experience">
+            <h3>Freelance Scientific Editor</h3>
+            <h2>CACTUS Communications and EditChecks LLC</h2>
+            <p><strong>January 2021 – Present (3+ years)</strong></p>
+            <ul class="bulleted-list">
+                <li>Editing manuscripts for clients targeting US or UK-based international journals</li>
+                <li>Revised 300+ publications for CACTUS and EditsChecks LLC</li>
+                <li>Drafting scientific reports for authors</li>
+                <li>Developed a voice-activated prompt to streamline repetitive tasks in manuscript editing</li>
+            </ul>
+        </div>
+        <div class="work-experience">
+            <h3>Technical Writer</h3>
+            <h2>Clarity Communications</h2>
+            <p><strong>Jul 2023 – February 2024 (&lt;1 year)</strong></p>
+            <ul class="bulleted-list">
+                <li>Writing clear and concise content for healthcare and financial service providers, including Liberty Health, Nedbank Private Wealth, First Global, and Allan Gray Australia</li>
+                <li>Developed Liberty Health's social media campaign for 2024 across Africa</li>
+                <li>Produced in-branch and digital messaging for Nedbank Private Wealth’s marketing campaigns across South Africa</li>
+                <li>Used AI to generate/adapt creative content for varying technical backgrounds</li>
+                <li>Collaborated in cross-functional teams for internal meetings, briefings, and alignment sessions</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p><a href="index.html">Back to Homepage</a></p>
+        <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
+        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+    </footer>
+</body>
+
+</html>

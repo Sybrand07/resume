@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybrand Engelbrecht - Skills</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <!-- Add any additional meta tags, CSS links, or JavaScript scripts here -->
+    </head>
+
+<body class="section-other">
+    <header class="header"> <!-- Added class "header" -->
+        <div class="top-header">
+            <div class="slash"></div>
+            <div class="left-section">
+                <div class="name">
+                    <div>Skills</div>
+                </div>
+            </div>
+            <div class="slash"></div>
+       
+   
+
+            <nav> <!--  represents the navigation bar, containing a list of links. -->
+                <ul> <!--  represents an unordered list, which is used to create the list of navigation items. -->
+                    <li><a href="index.html">Home</a></li> <!--  <li> represents list items, which are individual items within the navigation list. -->
+                    <li><a href="about-me.html">About Me</a> <!--  <a> represents anchor tags, which are used to create hyperlinks within the navigation items. -->
+                        <ul> <!--   selects the unordered lists that are nested within list items (submenus) and styles them. -->
+                            <li><a href="video-resume.html">Video Resume</a></li>
+                            <li><a href="education.html">Education</a></li>
+                            <li><a href="experience.html">Experience</a></li>
+                            <li><a href="skills.html">Skills</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="resources.html">Resources</a>
+                        <ul>
+                            <li><a href="presentations.html">Presentations</a></li>
+                            <li><a href="publications.html">Publications</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact-me.html">Contact</a>
+                        <ul>
+                            <li><a href="contact-me.html">Contact Me</a></li>
+                            <li><a href="references.html">References</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="skills" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <div class="angled-crop-top-negative" onmousemove="showTooltip(event)" onmouseout="hideTooltip()">
+            <img src="images/skills2.jpg" alt="Skills Image"> 
+            <div id="tooltip" class="tooltip">Equipment utilized personally in pursuit of experimental research objectives.</div>
+        </div>
+    </section>
+
+    <script>
+        function showTooltip(event) {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "block"; // Show the tooltip
+            tooltip.style.left = (event.pageX - tooltip.offsetWidth / 2) + "px"; // Adjust tooltip's left position
+            tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + "px"; // Adjust tooltip's top position
+        }
+        
+        function hideTooltip() {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "none"; // Hide the tooltip
+        }
+    </script>
+
+    <section id="skillset">  
+        <div class="skillset">
+            <h2>Administrative/IT Systems</h2>
+            <ul class="bulleted-list">
+                <li>Expert in <span class="orange">Microsoft Office</span> applications, including advanced Excel features such as dashboards; macros-enabled Word features; and PowerPoint</li>
+                <li>Competent in using collaboration tools, such as Box, <span class="orange">Teams</span>, Zoom, <span class="orange">ClickUp</span></li>
+                <li>Proficient in organization resource management tools, including <span class="orange">Oracle</span>, ServiceNow, Greenhouse, Workday, and SoluGrowth</li>
+                <li>Adept at using scientific database tools, notably <span class="orange">Veeva</span> and <span class="orange">DataVision</span></li>
+                <li>Skilled in statistical programs <span class="orange">Prism</span> and <span class="orange">Statistica</span></li>
+                <li>Sage with <span class="orange">Python</span> and <span class="orange">R</span></li>
+            </ul>
+        </div>
+
+        <div class="skillset">
+            <h2>Financial Acumen</h2>
+            <ul class="bulleted-list">
+                <li>Understanding project scope and hours</li>
+                <li>Monitoring hours throughout the project lifecycle</li>
+                <li>Flagging capacity and potential out-of-scope situations</li>
+            </ul>
+        </div>
+
+        <div class="skillset">
+            <h2>Client Policies and SOPs</h2>
+            <ul class="bulleted-list">
+                <li>Expectations of Third Parties</li>
+                <li>Code of Ethics</li>
+                <li>HCP Interaction and Travel Policy</li>
+                <li>Review and Approval of Promotional and Non-promotional Materials</li>
+                <li>Adherence to Global Meetings and Permissions Standards</li>
+            </ul>
+        </div>
+
+        <div class="skillset">
+            <h2>Publications</h2>
+            <ul class="bulleted-list">
+                <li>Good Publications Practice, ICMJE Authorship Criteria / Recommendations</li>
+                <li>Publications Sign-Off (PSO) Procedure</li>
+            </ul>
+        </div>
+        
+        <div class="skillset">
+            <h2>Pharmacovigilance</h2>
+            <ul class="bulleted-list">
+                <li>AHC Pharmacovigilance Training</li>
+            </ul>
+        </div>
+        
+        <div class="skillset">
+            <h2>General Client Processes</h2>
+            <ul class="bulleted-list">
+                <li>M&SS, Datacheck, and VPM Processes</li>
+            </ul>
+        </div>
+    </section>  
+
+    <footer>
+        <p><a href="index.html">Back to Homepage</a></p>
+        <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
+        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+    </footer>
+</body>
+
+</html>

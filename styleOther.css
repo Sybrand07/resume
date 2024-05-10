@@ -1,0 +1,36 @@
+/* Section styles */
+body .section-other {
+    color: white;
+    text-align: left;
+    left: 5%;
+    margin-top: 10px;
+}
+
+.section-other {
+    z-index: 1;
+    padding-top: 150px;
+    position: relative;
+}
+
+.section-other h2 {
+    color: white;
+    text-align: left;
+    left: 5%;
+    margin-top: 40px;
+}
+
+.section-other .overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.section-other .footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}

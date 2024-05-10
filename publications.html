@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sybrand Engelbrecht - Publications</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <!-- Add any additional meta tags, CSS links, or JavaScript scripts here -->
+</head>
+
+<body class="section-other">
+    <header class="header"> <!-- Added class "header" -->
+        <div class="top-header">
+            <div class="slash"></div>
+            <div class="left-section">
+                <div class="name">
+                    <div>Publications</div>
+                </div>
+            </div>
+            <div class="slash"></div>
+       
+   
+
+            <nav> <!--  represents the navigation bar, containing a list of links. -->
+                <ul> <!--  represents an unordered list, which is used to create the list of navigation items. -->
+                    <li><a href="index.html">Home</a></li> <!--  <li> represents list items, which are individual items within the navigation list. -->
+                    <li><a href="about-me.html">About Me</a> <!--  <a> represents anchor tags, which are used to create hyperlinks within the navigation items. -->
+                        <ul> <!--   selects the unordered lists that are nested within list items (submenus) and styles them. -->
+                            <li><a href="video-resume.html">Video Resume</a></li>
+                            <li><a href="education.html">Education</a></li>
+                            <li><a href="experience.html">Experience</a></li>
+                            <li><a href="skills.html">Skills</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="resources.html">Resources</a>
+                        <ul>
+                            <li><a href="presentations.html">Presentations</a></li>
+                            <li><a href="publications.html">Publications</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact-me.html">Contact</a>
+                        <ul>
+                            <li><a href="contact-me.html">Contact Me</a></li>
+                            <li><a href="references.html">References</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="publications" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <div class="angled-crop-top-negative" onmousemove="showTooltip(event)" onmouseout="hideTooltip()">
+            <img src="images/publications.jpg" alt="Publications Image">
+            <div id="tooltip" class="tooltip">Protein signaling cascade as published in doctoral dissertation.</div>
+        </div>
+    </section>
+
+    <script>
+        function showTooltip(event) {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "block"; // Show the tooltip
+            tooltip.style.left = (event.pageX - tooltip.offsetWidth / 2) + "px"; // Adjust tooltip's left position
+            tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + "px"; // Adjust tooltip's top position
+        }
+        
+        function hideTooltip() {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "none"; // Hide the tooltip
+        }
+    </script>
+
+    <section>
+        <div class="publications">
+            <h2>Journal Articles</h2>
+            <ul class="bulleted-list">
+                <li>Smit, S. E., Manirafasha, C., Marais, E., Johnson, R., & Huisamen, B. (2022). Cardioprotective Function of Green Rooibos (Aspalathus linearis) Extract Supplementation in Ex Vivo Ischemic Prediabetic Rat Hearts. <span class="orange">Planta Med</span>, 88(01), 62-78. DOI: <a href="https://www.thieme-connect.de/products/ejournals/abstract/10.1055/a-1239-9236">10.1055/a-1239-9236</a>.</li>
+                <li>Smit, S. E., Johnson, R., Van Vuuren, M. A., & Huisamen, B. (2018). Myocardial Glucose Clearance by Aspalathin Treatment in Young, Mature, and Obese Insulin-Resistant Rats. <span class="orange">Planta Med</span>, 84(02), 75-82. DOI: <a href="https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0043-117415?utm_source=TrendMD&utm_medium=cpc&utm_campaign=Planta_Medica_TrendMD_0">10.1055/s-0043-117415</a>.</li>
+            <ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="publications">
+            <h2>Conference Proceedings</h2>
+            <ul class="bulleted-list">
+                <li>Smit, S. E. (2018). Cardioprotective properties of Afriplex green rooibos extract in diet-induced obese Wistar rats. In: Proceedings of the <span class="orange">19th Annual SA Heart Conference</span>. Sun City, South Africa.</li>
+                <li>Smit, S. E. (2018). The ability of green rooibos extract (manufactured by Afriplex) to protect rat hearts against high-fat, high-caloric diet-induced comorbidities. In: Proceedings of the <span class="orange">62nd Annual Academic Day, Medicine and Health Sciences Faculty. Stellenbosch University</span>, South Africa.</li>
+                <li>Smit, S. E. (2018). Afriplex green rooibos extract and post-ischemic heart recovery in diet-induced, pre-diabetic rats. In: Proceedings of the <span class="orange">66th Annual Meeting of the Society for Medicinal Plant and Natural Product Research (GA) jointly with the 11th Shanghai International Conference on Traditional Chinese Medicine and Natural Medicines</span>. Shanghai, China.</li>
+                <li>Smit, S. E. (2017). The effect of green rooibos extract on rat hearts in a pre-diabetic model: an evaluation of the mitochondrial function and mechanisms involved. In: Proceedings of the <span class="orange">South African Rooibos Council Conference</span>. Stellenbosch, South Africa.</li>
+                <li>Smit, S. E. (2017). An investigation into the effects of aspalathin on myocardial glucose transport using cardiomyocytes from control and insulin-resistant rats, and differentiated H9C2 cells. In: Proceedings of the <span class="orange">43rd Annual Physiology Society of Southern Africa Conference</span>. Parys, South Africa.</li>
+                <li>Smit, S. E. (2017). Afriplex green rooibos extract and cardiovascular health. In: Proceedings of the <span class="orange">1st Biomedical Research and Innovation Platform Research Day</span>. Tygerberg Campus, Stellenbosch University.</li>
+                <li>Smit, S. E. (2016). Aspalathin’s anti-diabetic properties. In: Proceedings of the <span class="orange">60th Annual Academic Day, Medicine and Health Sciences Faculty. Stellenbosch University</span>, South Africa.</li>
+                <li>Smit, S. E. (2016). Association of dietary, circulating, and supplement fatty acids with coronary risk. In: Proceedings of the <span class="orange">Diabetes Discovery Platform Conference</span>. South African Medical Research Council.</li>
+                <li>Smit, S. E. (2016). Intermittent fasting ameliorates metabolic diseases in mice… and humans? In: Proceedings of the <span class="orange">Diabetes Discovery Platform Conference</span>. South African Medical Research Council.</li>
+                <li>Smit, S. E. (2015). Impact of high-fat, low-carbohydrate diet on myocardial substrate oxidation, insulin sensitivity, and cardiac function after ischemia-reperfusion. In: Proceedings of the <span class="orange">Diabetes Discovery Platform Conference</span>. South African Medical Research Council.</li>
+                <li>Smit, S. E. (2015). The cardioprotective abilities of green rooibos tea and an investigation into the correlating mechanisms involved. In: Proceedings of the <span class="orange">Medical Physiology</span>, Biomedical Department. Stellenbosch University.</li>
+                <li>Smit, S. E. (2015). Shining light on heart matters. Cardiovascular health and sunlight. In: Proceedings of the <span class="orange">Medical Physiology</span>, Biomedical Department. Stellenbosch University.</li>
+                <li>Smit, S. E. (2014). Antioxidants in cardiovascular therapy: panacea or false? In: Proceedings of the <span class="orange">Medical Physiology</span>, Biomedical Department. Stellenbosch University.</li>
+                <li>Smit, S. E. (2014). Intermittent fasting: an effective therapy in preventing metabolic diseases in mice… and humans? In: Proceedings of the <span class="orange">Medical Physiology</span>, Biomedical Department. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). The unlocked potential of the human senses. In: Proceedings of the <span class="orange">Biochemistry Department</span>. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). The membrane topology of cytochrome P450-dependent enzymes. In: Proceedings of the <span class="orange">Biochemistry Department</span>. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). AMPK: A metabolic master switch. In: Proceedings of the <span class="orange">Biochemistry Department</span>. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). Polyunsaturated fatty acids: Interaction with cell membranes and its components. In: Proceedings of the <span class="orange">Biochemistry Department</span>. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). Can the improved efficiency of electron chain enzymes in human brain mitochondria be linked to the evolution of higher intelligence in humans? In: Proceedings of the <span class="orange">Biochemistry Department</span>. Stellenbosch University.</li>
+                <li>Smit, S. E. (2013). The interaction between cytochrome b5 and 11β-hydroxysteroid dehydrogenase type 2. In: Proceedings of the <span class="orange">Biochemistry Department Conference</span>. Stellenbosch University.Engelbrecht, S., & Jones, A. (Year). "Title of the Paper." Presented at <em>Conference Name</em>, Location.</li>
+                <!-- Add more conference papers as needed -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- Add more sections for additional types of publications -->
+
+    <footer>
+        <p><a href="index.html">Back to Homepage</a></p>
+        <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
+        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+    </footer>
+</body>
+
+</html>

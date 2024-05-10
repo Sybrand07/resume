@@ -1,0 +1,1176 @@
+/* styles.css */
+
+/* General styles */
+
+p {
+    margin: 0; /* Remove default margin */
+}
+
+/* Reset default margin and padding */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color:rgb(17, 17, 20);
+    color: white;
+    
+}
+
+.top-header {
+    display: flex;
+    align-items: center;
+    
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.left-section,
+.right-section {
+    display: flex;
+    align-items: center;
+}
+
+
+.slash {
+    width: 50px;
+    height: 3px;
+    background-color: orange;
+    margin-right: 2px;
+    transform: rotate(115deg);
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.subname {
+    font-size: 17px;
+}
+
+
+.name > div {
+    line-height: 1.2; /* Ensure proper spacing between lines */
+    margin-bottom: 5px; /* Add some space between lines */
+}
+
+.name > div:last-child {
+    margin-bottom: 0; /* Remove margin for last line */
+}
+
+/* Navigation bar */
+nav {
+    position: absolute; /* Position navigation bar absolutely */
+    display: flex; /* Make navigation flex */
+    align-items: center; /* Align navigation items vertically */
+    top: 25px; /* Anchor navigation to the top */
+    right: 5%; /* Anchor navigation to the right */
+    background-color: transparent; /* Transparent background */
+    padding: 10px 0; /* Adjust padding as needed */
+    z-index: 2; /* Ensure the navigation is above other elements */
+}
+
+/* Styles for unordered lists */
+nav ul {
+    list-style-type: none; /* Remove default list style */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    text-align: center; /* Center-align text */
+    display: flex; /* Make navigation items flex */
+}
+
+/* Styles for list items */
+nav ul li {
+    margin-right: 20px; /* Add margin to separate list items */
+    position: relative; /* Set position to relative for child elements */
+}
+
+/* Styles for anchor tags */
+nav ul li a {
+    color: #fff; /* Light text */
+    text-decoration: none; /* Remove underline */
+    padding: 10px; /* Add padding around links */
+    border: 1px solid transparent; /* Transparent border */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 1s ease; /* Smooth transition for border color */
+}
+
+/* Styles for anchor tags on hover */
+nav ul li a:hover {
+    border-color: orange; /* Light border on hover */
+}
+
+/* Styles for nested unordered lists (submenus) */
+nav ul li ul {
+    display: none; /* Hide submenus by default */
+    position: absolute; /* Position submenu absolutely */
+    top: 100%; /* Position submenu below parent */
+    left: 0; /* Align submenu with parent */
+    background-color: rgb(17, 17, 20); /* Dark background */
+    border: 1px solid orange; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Add padding */
+    text-align: left; /* Align text to the left */
+    z-index: 3; /* Ensure the submenus are above other elements */
+}
+
+/* Show submenu on parent hover */
+nav ul li:hover ul {
+    display: block; /* Display submenu on parent hover */
+}
+
+/* Styles for list items within submenus */
+nav ul li ul li {
+    display: block; /* Display submenu items as block */
+    margin: 5px 0; /* Add margin between submenu items */
+}
+
+/* Styles for anchor tags within submenus */
+nav ul li ul li a {
+    color: #fff; /* Light text */
+    text-decoration: none; /* Remove underline */
+    padding: 5px 10px; /* Add padding around links */
+    display: block; /* Display links as block */
+}
+
+/* Styles for anchor tags within submenus on hover */
+nav ul li ul li a:hover {
+    background-color: #fff; /* Light background on hover */
+    color: rgb(17, 17, 20); /* Dark text on hover */
+}
+
+
+
+
+
+/* General styles */
+body.homepage { /* Applicable to <body class="homepage">. Body style specific to the homepage. The selector body.homepage targets the <body> element with the class "homepage" */
+    font-family: Arial, sans-serif; /* Use Arial or sans-serif font family */
+    background-color: rgb(17, 17, 20); /* Dark background */
+    color: #fff; /* Light text */
+    margin: 0; /* Remove default margin */
+}
+
+.homepage .header { /* Styles for header on the homepage */
+    position: absolute; /* Position header absolutely */
+    top: 0; /* Set header to top of the viewport */
+    left: 5%; /* Position header 5% from the left side */
+    width: 100%; /* Full width */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* Light text */
+    text-align: left; /* Align text to the left */
+    padding: 20px 0; /* Adjust padding as needed */
+    z-index: 999; /* Ensure it's above other elements */
+}
+
+.homepage section { /* <section id="home" class="content-section">. Targets <section> elements within elements with the class "homepage" and applies specific styles to them. */
+    position: relative; /* Set position to relative */
+    z-index: 1; /* Ensure the sections are behind the navigation */
+}
+
+.overlay-text { /* Styles for section headings on the homepage */
+    position: absolute; /* Position absolutely */
+    top: 50%; /* Position at 50% from the top */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+.custom-overlay {
+    position: absolute; /* Ensure absolute positioning */
+    top: 35%; /* Adjust the percentage as needed to move the text upwards */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+
+
+.homepage .footer {
+    background-color: rgb(17, 17, 20); /* Dark background */
+    color: #fff; /* White text */
+    text-align: center; /* Center-align text */
+    
+    padding: 20px; /* Add padding */
+}
+
+/* Styles for hyperlinks within h2 */
+.homepage h2 a {
+    color: inherit; /* Inherit color from parent (default text color) */
+    text-decoration: none; /* Remove underline */
+}
+
+.homepage h2 a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
+
+
+
+/* Section styles */
+
+
+body.section-other { /* Applicable to <body class="homepage">. Body style specific to the homepage. The selector body.homepage targets the <body> element with the class "homepage" */
+    font-family: Arial, sans-serif; /* Use Arial or sans-serif font family */
+    background-color: rgb(17, 17, 20); /* Dark background */
+    color: #fff; /* Light text */
+    margin: 0; /* Remove default margin */
+}
+
+.section-other .slash {
+    width: 50px;
+    height: 3px;
+    background-color: orange;
+    margin-right: 2px;
+    transform: rotate(115deg);
+}
+
+.section-other .name {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.section-other .header { /* Styles for header on the homepage */
+    position: absolute; /* Position header absolutely */
+    top: 0; /* Set header to top of the viewport */
+    left: 5%; /* Position header 5% from the left side */
+    width: 100%; /* Full width */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* Light text */
+    text-align: left; /* Align text to the left */
+    padding: 20px 0; /* Adjust padding as needed */
+    z-index: 999; /* Ensure it's above other elements */
+}
+
+.section-other .footer {
+    background-color: rgb(17, 17, 20); /* Dark background */
+    color: #fff; /* White text */
+    text-align: center; /* Center-align text */
+    padding-top: 30px;
+    padding: 20px; /* Add padding */
+}
+
+/* Apply modern styling to sections */
+
+
+/* Style section headings */
+.section-other h2 {
+    font-size: 24px;
+    margin: 50px;
+    color: orange; /* Dark text color */
+    margin-top: 40px; /* Adjust the bottom margin to control spacing between paragraphs */
+    margin-bottom: 20px; /* Add space below headings */
+}
+
+.section-other h3 {
+    font-size: 18px;
+    margin: 50px;
+    color: whitesmoke; /* Dark text color */
+    margin-top: 20px; /* Adjust the bottom margin to control spacing between paragraphs */
+    margin-bottom: 20px; /* Add space below headings */
+}
+
+/* Style section paragraphs */
+.section-other p {
+    font-size: 16px;
+    margin: 50px;
+    color: rgb(182, 170, 170); /* Semi-dark text color */
+    line-height: 1.5; /* Improve readability with slightly increased line height */
+    margin-top: 10px; /* Adjust the bottom margin to control spacing between paragraphs */
+    margin-bottom: 10px; /* Adjust the bottom margin to control spacing between paragraphs */
+    
+}
+
+/* Specific styling for the bulleted list */
+.bulleted-list {
+    list-style-type: disc; /* Use disc bullets */
+    margin-left: 70px; /* Add left margin for indentation */
+    
+}
+
+.bulleted-list li {
+    margin-bottom: 10px; /* Add space between list items */
+    padding-left: 10px; /* Adjust the distance between the bullet and the text */
+}
+
+#work-experience {
+    margin-top: 50px; /* Add space between list items */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(3, auto); /* 3 rows */
+    grid-gap: 0px; /* Gap between blocks */
+}
+
+.work-experience {
+    background-color: rgb(17, 17, 20);
+    padding: 0px;
+    
+}
+
+.work-experience h2 {
+    margin-top: 30px;
+    color: whitesmoke;
+}
+
+.work-experience h3 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: orange;
+}
+
+.work-experience p {
+    margin: 5px 0;
+    padding-left: 50px;
+}
+
+.work-experience ul {
+    margin: 10px 0;
+    margin-right: 50px;
+    padding-left: 70px;
+    padding-bottom: 30px;
+}
+
+/* Style for the horizontal line between rows */
+.work-experience:nth-child(1){
+    border-bottom: 5px solid #ccc;
+    border-right: 5px solid #ccc;
+}
+
+.work-experience:nth-child(2){
+    border-bottom: 5px solid #ccc;
+    border-left: 5px solid #ccc;
+}
+
+.work-experience:nth-child(3) {
+    border-top: 5px solid #ccc;
+    border-right: 5px solid #ccc;
+}
+
+.work-experience:nth-child(4) {
+    border-top: 5px solid #ccc;
+    border-left: 5px solid #ccc;
+}
+
+.education-section h2 {
+    margin-top: 10px;
+    color: whitesmoke;
+}
+
+.education-section h3 {
+    margin-top: 25px;
+    font-size: 24px;
+    color: orange;
+}
+
+.education-container {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center; /* Center the boxes horizontally */
+}
+
+.education-section {
+    width: calc(45% - 10px); /* Set width for each section */
+    border: 7px solid #ccc; /* Add border around each section */
+    padding: 20px; /* Add padding inside each section */
+    position: relative; /* Position relative for arrow */
+}
+
+.education-section:not(:last-child) {
+    margin-right: 20px; /* Add margin between sections */
+}
+
+/* Line between sections */
+.education-section::after {
+    content: '';
+    position: absolute;
+    bottom: 102%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    height: 30px;
+    background-color: orange;
+}
+
+/* Arrow */
+.education-section::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 32px); /* Position above the line */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid orange; /* Changed from border-top to border-bottom */
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    color: white; /* White text */
+    padding: 10px; /* Padding around the text */
+    border-radius: 10px; /* Rounded corners */
+    display: none; /* Initially hidden */
+}
+
+#skillset {
+    margin-top: 50px; /* Add space between list items */
+    width: 100%; /* Ensure the container takes up the full width */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(3, auto); /* 3 rows */
+    grid-gap: 0px; /* Gap between blocks */
+}
+
+.skillset {
+    background-color: rgb(17, 17, 20);
+    padding: 0px;
+}
+
+.skillset h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: orange;
+}
+
+.skillset ul {
+    margin: 10px 0;
+    padding-left: 70px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+}
+
+/* Style for the horizontal line between rows */
+.skillset:nth-child(1){
+    border-bottom: 5px solid #ccc;
+    border-right: 5px solid #ccc;
+}
+
+.skillset:nth-child(2){
+    border-bottom: 5px solid #ccc;
+    border-right: 5px solid #ccc;
+}
+
+.skillset:nth-child(3) {
+    border-bottom: 5px solid #ccc;
+}
+
+.skillset:nth-child(4) {
+    border-right: 5px solid #ccc;
+}
+
+.skillset:nth-child(5) {
+    border-right: 5px solid #ccc;
+}
+
+.orange {
+    color: orange;
+}
+
+
+.publications h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: orange;
+}
+
+.presentations-container {
+    display: flex;
+}
+
+.presentations-container img {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 50%;
+    height: auto;
+
+    border-bottom: 10px solid orange; /* Changed from border-top to border-bottom */
+    /* Optional styling for the images */
+}
+
+#contact-me-details {
+    margin-top: 50px; /* Add space between list items */
+    width: 100%; /* Ensure the container takes up the full width */
+    display: flex;
+    grid-template-columns: repeat(2, 1fr); /* 3 columns */
+    grid-template-rows: repeat(2, auto); /* 3 rows */
+    grid-gap: 0px; /* Gap between blocks */
+    justify-content: center;
+}
+
+.contact-me {
+    background-color: rgb(17, 17, 20);
+    padding: 0px;
+    
+}
+
+.contact-me h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: orange;
+}
+
+.contact-me ul {
+    margin: 10px 0;
+    padding-left: 70px;
+}
+
+/* Adjust the margin for the first and second child elements */
+.contact-me:nth-child(1),
+.contact-me:nth-child(2) {
+    margin-left: 50px; /* Adjust this value as needed */
+    margin-right: 50px; /* Adjust this value as needed */
+}
+
+#contact-form {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    clip-path: polygon(0% 0%, 100% 0%, 90% 90%, 10% 90%); 
+    height: 100%; /* Ensure the image container fills the entire section */
+}
+
+#contact-me-footer {
+    margin-top: -140px;
+}
+
+table {
+    margin-left: 50px;
+    margin-right: 50px;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    padding-right: 60px;
+    text-align: left;
+}
+th {
+    background-color: orange;
+}
+
+#reference-list {
+    margin-top: 10px; /* Add space between list items */
+    width: 100%; /* Ensure the container takes up the full width */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(3, auto); /* 3 rows */
+    grid-gap: 0px; /* Gap between blocks */
+}
+
+.reference-list {
+    background-color: rgb(17, 17, 20);
+    padding: 0px;
+}
+
+.reference-list h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: orange;
+}
+
+.reference-list ul {
+    margin: 10px 0;
+    padding-left: 70px;
+    padding-bottom: 10px;
+}
+
+/* Style for the horizontal line between rows */
+.reference-list:nth-child(1){
+    border-right: 5px solid #ccc;
+}
+
+.reference-list:nth-child(2){
+    border-right: 5px solid #ccc;
+}
+
+
+
+
+
+/* Image overlay styles */
+.playback {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    clip-path: polygon(0% 5%, 100% 0%, 100% 100%, 0% 100%); 
+    height: 100%; /* Ensure the image container fills the entire section */
+    margin-top: 7%; /* Adjust this value to move the image up */
+}
+
+.playback video {
+    width: 100%; /* Set the width of the image to fill its container */
+    height: 50%; /* Set the height of the image to fill its container */
+    object-fit: fill; /* Ensure the image covers its container while maintaining aspect ratio */
+}
+
+.playback::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 1%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 20px; /* Line height */
+    background: linear-gradient(to right, transparent, orange, transparent,rgb(251, 77, 0), orange, transparent, rgb(255, 221, 34)); /* Adjust gradient colors and direction as needed */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adjust shadow color and size as needed */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform: skewY(-2deg);
+    transform-origin: top;
+}
+
+#video {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    margin-top: 100px; /* Adjust this value to move the image up */
+}
+
+#video::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    bottom: 0%; /* Position at the intersection */
+    width: 100%; /* Full width */
+    height: 10px; /* Line height */
+    background-color: orange; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform-origin: top;
+}
+
+/* Image overlay styles */
+.angled-crop-top-positive {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    height: 100%; /* Ensure the image container fills the entire section */
+    margin-top: 7%; /* Adjust this value to move the image up */
+}
+
+.angled-crop-top-negative {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    clip-path: polygon(0% 5%, 100% 0%, 100% 100%, 0% 100%);
+    height: 100%; /* Ensure the image container fills the entire section */
+    margin-top: 7%; /* Adjust this value to move the image up */
+}
+
+.angled-crop-top-negative::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    bottom: 0%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 10px; /* Line height */
+    background-color: orange; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform-origin: top;
+}
+
+.angled-crop-positive {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    clip-path: polygon(0% 0%, 100% 15%, 100% 100%, 0% 100%); /*In this example, polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%) defines a polygon with four points: the top-left corner, the top-right corner (offset by 4% to approximate a 5-degree angle), the bottom-right corner, and the bottom-left corner. */
+    height: 100%; /* Ensure the image container fills the entire section */
+    margin-top: -10%; /* Adjust this value to move the image up */
+}
+
+.angled-crop-negative {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    clip-path: polygon(0% 15%, 100% 0%, 100% 100%, 0% 100%);
+    height: 100%; /* Ensure the image container fills the entire section */
+    margin-top: -10%; /* Adjust this value to move the image up */
+}
+
+.angled-crop-top-positive::before {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 0; /* Position at the top */
+    left: 20; /* Position 20 pixels from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+.angled-crop-positive::before {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 0; /* Position at the top */
+    left: 20; /* Position 20 pixels from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+.angled-crop-negative::before {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 0; /* Position at the top */
+    left: 20; /* Position 20 pixels from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 50, 0.5); /* Semi-transparent blue background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+.angled-crop-positive::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 6%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 20px; /* Line height */
+    background-color: white; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform: skewY(5deg);
+    transform-origin: top;
+}
+
+.angled-crop-negative::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 6%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 20px; /* Line height */
+    background-color: white; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform: skewY(-5deg);
+    transform-origin: top;
+}
+
+/* Add the hover effect to remove the tint */
+.angled-crop-top-positive:hover::before, .angled-crop-top-negative:hover::before, .angled-crop-positive:hover::before, .angled-crop-negative:hover::before {
+    background-color: rgba(0, 0, 0, 0); /* Fully transparent background */
+}
+
+.angled-crop-top-positive img, .angled-crop-top-negative img, .angled-crop-positive img, .angled-crop-negative img {
+    width: 100%; /* Set the width of the image to fill its container */
+    height: 100%; /* Set the height of the image to fill its container */
+    object-fit: cover; /* Ensure the image covers its container while maintaining aspect ratio */
+}
+
+/* Add shade underneath text on hover */
+.angled-crop-positive:hover .overlay-text, .angled-crop-negative:hover .overlay-text {
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+}
+
+/* Image overlay styles */
+.angled-crop-custom-negative {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    height: 100%; /* Ensure the image container fills the entire section */
+    clip-path: polygon(0% 15%, 100% 0%, 100% 100%, 0% 100%); /* Create an angled crop shape */
+    margin-top: -10%; /* Move the image up */
+}
+
+.angled-crop-custom-negative::before {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 0; /* Position at the top */
+    left: 20; /* Position 20 pixels from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 50, 0.5); /* Semi-transparent blue background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+.angled-crop-custom-positive {
+    position: relative; /* Set position to relative */
+    overflow: hidden; /* Hide overflowing content */
+    height: 100%; /* Ensure the image container fills the entire section */
+    clip-path: polygon(0% 0%, 100% 15%, 100% 100%, 0% 100%); /* Create an angled crop shape */
+    margin-top: -10%; /* Move the image up */
+}
+
+.angled-crop-custom-positive::before {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 0; /* Position at the top */
+    left: 20; /* Position 20 pixels from the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 50, 0.5); /* Semi-transparent blue background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+.angled-crop-custom-positive::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 6%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 20px; /* Line height */
+    background-color: white; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform: skewY(5deg);
+    transform-origin: top;
+}
+
+.angled-crop-custom-negative::after {
+    content: ""; /* Add content */
+    position: absolute; /* Position absolutely */
+    top: 6%; /* Position at the intersection */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Full width */
+    height: 20px; /* Line height */
+    background-color: white; /* Line color */
+    z-index: 1; /* Ensure the line appears above the images */
+    transform: skewY(-5deg);
+    transform-origin: top;
+}
+
+/* Add the hover effect to remove the tint */
+.custom-image:hover::before {
+    background-color: rgba(0, 0, 50, 0); /* Fully transparent background */
+}
+
+.angled-crop-custom-positive img, .angled-crop-custom-negative img {
+    width: 100%; /* Set the width of the image to fill its container */
+    height: 100%; /* Set the height of the image to fill its container */
+    object-fit: cover; /* Ensure the image covers its container while maintaining aspect ratio */
+}
+
+/* Add the hover effect to remove the tint */
+.angled-crop-custom-positive:hover::before, .angled-crop-custom-negative:hover::before {
+    background-color: rgba(169, 169, 169, 0); /* Fully transparent background */
+}
+
+/* Add shade underneath text on hover */
+.angled-crop-custom-negative:hover .overlay-text {
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    width: 50%; /* Adjust the width of the oval */
+    height: 35%; /* Adjust the height of the oval */
+    border-radius: 50%; /* Creates an oval shape */
+    background-color: rgba(0, 0, 50, 0.5); /* Semi-transparent blue background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+/* Add shade underneath text on hover */
+.angled-crop-custom-positive:hover .overlay-text::after {
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    width: 50%; /* Adjust the width of the oval */
+    height: 35%; /* Adjust the height of the oval */
+    border-radius: 50%; /* Creates an oval shape */
+    background-color: rgba(0, 0, 50, 0.5); /* Semi-transparent blue background */
+    transition: background-color 1s ease; /* Smooth transition for background color */
+}
+
+#experience-text {
+    position: absolute; /* Ensure absolute positioning */
+    top: 20%; /* Adjust the percentage as needed to move the text upwards */
+    left: 85%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+#skills-text {
+    position: absolute; /* Ensure absolute positioning */
+    top: 50%; /* Adjust the percentage as needed to move the text upwards */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+#publications-text {
+    position: absolute; /* Ensure absolute positioning */
+    top: 50%; /* Adjust the percentage as needed to move the text upwards */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+#contact-me-text {
+        position: absolute; /* Ensure absolute positioning */
+        top: 50%; /* Adjust the percentage as needed to move the text upwards */
+        left: 20%; /* Position at 50% from the left */
+        transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+        font-size: 20px; /* Set font size */
+        max-width: 30ch; /* Limit the maximum width of the container */
+        text-align: center; /* Center-align text */
+        color: white; /* White text */
+        text-shadow: 
+            -1px -1px 0 #000,  
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000,
+             2px  2px 5px #000; /* Black outline with shadow */
+        z-index: 1; /* Ensure the text appears above the overlay */
+        transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+#references-text {
+    position: absolute; /* Ensure absolute positioning */
+    top: 50%; /* Adjust the percentage as needed to move the text upwards */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    font-size: 20px; /* Set font size */
+    max-width: 30ch; /* Limit the maximum width of the container */
+    text-align: center; /* Center-align text */
+    color: white; /* White text */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         2px  2px 5px #000; /* Black outline with shadow */
+    z-index: 1; /* Ensure the text appears above the overlay */
+    transition: color 1s ease; /* Add transition for smooth effect */
+}
+
+/* Add shade underneath text on hover */
+#experience-text {
+    position: absolute;
+    top: 20%;
+    left: 85%;
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    color: white; /* White text */
+    z-index: 2; /* Ensure text appears above pseudo-element */
+}
+
+#experience-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%; /* Start from the right side */
+    transform: translate(-50%, -50%) scale(0); /* Center text horizontally and vertically */
+    width: 0;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 1);
+    border: 7px solid rgb(73, 118, 199); /* Black border */
+    transition: height 0.5s ease; /* Smooth transition for width */
+    z-index: -1; /* Ensure pseudo-element appears below text */
+}
+
+.angled-crop-custom-positive:hover #experience-text::after {
+    width: 140%; /* Expand width to reveal oval */
+    height: 180%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Center the oval */
+    transition: transform 0.5s ease; /* Smooth transition for width */
+}
+
+/* Smooth transition back to initial state after hover */
+.angled-crop-custom-positive #experience-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 150%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transition: transform 0.5s ease; /* Smooth transition for scale */
+}
+
+.angled-crop-custom-negative:hover #experience-text::after {
+    width: 160%; /* Expand width to reveal oval */
+    height: 180%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the oval */
+}
+
+/* Add shade underneath text on hover */
+#skills-text {
+    position: absolute;
+    top: 54%;
+    left: 52%;
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    color: white; /* White text */
+    z-index: 1; /* Ensure text appears above pseudo-element */
+}
+
+#skills-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%; /* Start from the right side */
+    transform: translate(-50%, -50%) scale(0); /* Center text horizontally and vertically */
+    width: 0;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 1);
+    border: 20px solid black; /* Black border */
+    transition: height 0.5s ease; /* Smooth transition for width */
+    z-index: -1; /* Ensure pseudo-element appears below text */
+}
+
+.angled-crop-custom-positive:hover #skills-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 180%; /* Expand height to reveal oval */
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Center the oval */
+    transition: transform 0.5s ease; /* Smooth transition for width */
+}
+
+/* Smooth transition back to initial state after hover */
+.angled-crop-custom-positive #skills-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 200%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transition: transform 0.5s ease; /* Smooth transition for scale */
+}
+
+/* Add shade underneath text on hover */
+#publications-text {
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    color: white; /* White text */
+    z-index: 1; /* Ensure text appears above pseudo-element */
+}
+
+#publications-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%; /* Start from the right side */
+    transform: translate(-50%, -50%) scale(0); /* Center text horizontally and vertically */
+    width: 0;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 1);
+    border: 9px solid black; /* Black border */
+    transition: height 0.5s ease; /* Smooth transition for width */
+    z-index: -1; /* Ensure pseudo-element appears below text */
+}
+
+.angled-crop-custom-positive:hover #publications-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 180%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Center the oval */
+    transition: transform 0.5s ease; /* Smooth transition for width */
+}
+
+/* Smooth transition back to initial state after hover */
+.angled-crop-custom-positive #publications-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 150%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transition: transform 0.5s ease; /* Smooth transition for scale */
+}
+
+/* Add shade underneath text on hover */
+#references-text {
+    position: absolute;
+    top: 54%;
+    left: 52%;
+    transform: translate(-50%, -50%); /* Center text horizontally and vertically */
+    color: white; /* White text */
+    z-index: 2; /* Ensure text appears above pseudo-element */
+}
+
+#references-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%; /* Start from the right side */
+    transform: translate(-50%, -50%) scale(0); /* Center text horizontally and vertically */
+    width: 0;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 1);
+    border: 9px solid rgb(73, 118, 199); /* Black border */
+    transition: height 0.5s ease; /* Smooth transition for width */
+    z-index: -1; /* Ensure pseudo-element appears below text */
+}
+
+.angled-crop-custom-positive:hover #references-text::after {
+    width: 140%; /* Expand width to reveal oval */
+    height: 220%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Center the oval */
+    transition: transform 0.5s ease; /* Smooth transition for width */
+}
+
+/* Smooth transition back to initial state after hover */
+.angled-crop-custom-positive #references-text::after {
+    width: 120%; /* Expand width to reveal oval */
+    height: 150%; /* Expand height to reveal oval */
+    top: 50%;
+    left: 50%;
+    transition: transform 0.5s ease; /* Smooth transition for scale */
+}
