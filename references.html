@@ -51,10 +51,25 @@
     </header>
 
     <section id="references" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <div class="angled-crop-top-negative">
-            <img src="images/references-page.jpg" alt="References Image"> 
+        <div class="angled-crop-top-negative" onmousemove="showTooltip(event)" onmouseout="hideTooltip()">
+            <img src="images/references-page.jpg" alt="References Image">
+            <div id="tooltip" class="tooltip">Playbook of key opinion leaders in the field of genitourinary medical oncology developed upon request by AstraZeneca.</div>
         </div>
     </section>
+
+    <script>
+        function showTooltip(event) {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "block"; // Show the tooltip
+            tooltip.style.left = (event.pageX - tooltip.offsetWidth / 2) + "px"; // Adjust tooltip's left position
+            tooltip.style.top = (event.pageY - tooltip.offsetHeight - 10) + "px"; // Adjust tooltip's top position
+        }
+        
+        function hideTooltip() {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "none"; // Hide the tooltip
+        }
+    </script>
 
     <section id="reference-list">
         <div class="reference-list">
