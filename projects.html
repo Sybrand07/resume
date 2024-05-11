@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Sybrand Engelbrecht - Projects</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <!-- Add any additional meta tags, CSS links, or JavaScript scripts here -->
+</head>
+
+<body class="section-other">
+    <header class="header"> <!-- Added class "header" -->
+        <div class="top-header">
+            <div class="slash"></div>
+            <div class="left-section">
+                <div class="name">
+                    <div>Projects</div>
+                </div>
+            </div>
+            <div class="slash"></div>
+
+            <!-- Placeholder for the navigation bar -->
+            <div id="navbar-placeholder"></div>
+        </div>
+    </header>
+
+    <!-- Script to fetch and insert the navigation bar -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navbar-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching navbar:', error));
+    </script>
+
+    <section id="Projects" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <div class="angled-crop-top-negative">
+            <img src="images/Projects.jpg" alt="Projects Image"> 
+        </div>
+    </section>
+
+    <section id="cv">
+        <h2>The following projects were built to incorporate coding learnings into real-world applications.</h2>
+        <h3>Feel free to explore the functionality!</h3>
+    </section>
+
+    <section>
+        <div class="publications">
+            <table>
+            <tr>
+                <th>Project</th>
+                <th>Description</th>
+                <th>Features</th>
+            </tr>
+            <tr>
+                <td>Venah's travels</td>
+                <td>An interactive map displaying places visited to date.</td>
+                <td>The timeline can be navigated using either a slider bar or year-specific buttons to instantly jump to desired periods. The most recent visited location is highlighted in green, providing easy visual reference for the latest marker added.</td>
+            </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="webbox" class="content-section">
+        <iframe src="video-resume.html" width="100%" height="600px" frameborder="0"></iframe>
+    </section>
+
+    <section>
+        <div class="publications">
+            <table>
+            <tr>
+                <th>Project</th>
+                <th>Description</th>
+                <th>Features</th>
+            </tr>
+            <tr>
+                <td>Liftclub App</td>
+                <td>Web development</td>
+                <td><a href="https://code.visualstudio.com/download">Download Visual Studio Code</a></td>
+            </tr>
+            </table>
+        
+        </div>
+    </section>
+
+    <section id="webbox" class="content-section">
+        <iframe src="update-in-progress.html" width="100%" height="600px" frameborder="0"></iframe>
+    </section>
+
+    <section>
+        <div class="publications">
+            <table>
+            <tr>
+                <th>Project</th>
+                <th>Description</th>
+                <th>Features</th>
+            </tr>
+            <tr>
+                <td>Automated Q&A for ChatGPT</td>
+                <td>AI assistant for code templates and troubleshooting</td>
+                <td><a href="https://chatgpt.com/">Visit ChatGPT</a></td>
+            </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="webbox" class="content-section">
+        <iframe src="update-in-progress.html" width="100%" height="600px" frameborder="0"></iframe>
+    </section>
+
+    <!-- Add more sections for additional resources -->
+
+    <footer>
+        <p><a href="index.html">Back to Homepage</a></p>
+        <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
+        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+    </footer>
+</body>
+
+</html>
