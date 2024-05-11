@@ -612,7 +612,12 @@ th {
     border-right: 5px solid #ccc;
 }
 
-
+#webbox {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
 
 
 
