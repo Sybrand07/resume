@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visits Map</title>
+  <!-- Load the Google Maps JavaScript API with your API key -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEUgmbZzflJsn-886sndbAeDkTRsgPZO8&callback=initMap&v=weekly&libraries=marker" defer ></script>
+  <!-- Load jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- Load jQuery UI for slider -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css"> <script>
+    // Initialize the map and other variables
+    var map, markers = [];
+    var sliderMinDate, sliderMaxDate;
+
+    // Define the sampleData array with provided data
+    var sampleData = [
+      { date: '04/11/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '04/11/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '05/19/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '05/19/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '05/20/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '05/20/2007', place: 'Beitbridge', lat: -22.2146, lng: 30.003 },
+      { date: '06/20/2007', place: 'O.R. Tambo', lat: -26.1372, lng: 28.2411 },
+      { date: '07/06/2007', place: 'O.R. Tambo', lat: -26.1372, lng: 28.2411 },
+      { date: '07/06/2007', place: 'Roissy Airport (Paris)', lat: 49.0097, lng: 2.5479 },
+      { date: '08/06/2007', place: 'Hosea Kutaro Airport', lat: -22.5649, lng: 17.0805 },
+      { date: '08/06/2007', place: 'O.R. Tambo', lat: -26.1372, lng: 28.2411 },
+      { date: '08/08/2007', place: 'Hosea Kutaro Airport', lat: -22.5649, lng: 17.0805 },
+      { date: '08/08/2007', place: 'O.R. Tambo', lat: -26.1372, lng: 28.2411 }
+    ];
+
+    // Process sample data
+    var timestamps = sampleData.map(data => new Date(data.date).getTime());
+    sliderMinDate = Math.min(...timestamps);
+    sliderMaxDate = Math.max(...timestamps);
+    console.log(sliderMinDate); // Log the value to the console
+    
+
+    $(document).ready(function() {
+      $("#dateSlider").slider({
+        range: "max",
+        min: sliderMinDate,
+        max: sliderMaxDate,
+        slide: function(event, ui) {
+          updateDataDisplay(ui.value);
+          updateMarkers(ui.value);
+        }
+      });
+    });
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 2,
+        center: {lat: 0, lng: 0},
+        mapId: 'DEMO_MAP_ID', // Add map ID
+      });
+
+      
+
+      // Update markers initially with minimum date
+      updateMarkers(sliderMinDate);
+      updateDataDisplay(sliderMinDate);
+      
+          
+      
+      // Create markers for each location
+      sampleData.forEach(data => {
+        var marker = new google.maps.marker.AdvancedMarkerElement({
+          position: { lat: data.lat, lng: data.lng },
+          map: map,
+          title: data.place
+        });
+        markers.push(marker);
+      });
+
+      
+    }
+
+    function updateDataDisplay(sliderValue) {
+      var currentDate = new Date(sliderValue);
+      var displayData = sampleData.filter(item => new Date(item.date).getTime() === currentDate.getTime());
+      
+      // Clear previous data display
+      $('#dataDisplay').empty();
+
+      // Display new data
+      displayData.forEach(item => {
+        $('#dataDisplay').append(`<p>Date: ${item.date}, Place: ${item.place}, Latitude: ${item.lat}, Longitude: ${item.lng}</p>`);
+      });
+    }
+
+    function updateMarkers(sliderValue) {
+      var currentDate = new Date(sliderValue);
+      for (var i = 0; i < markers.length; i++) {
+        var markerDate = new Date(sampleData[i].date);
+        if (markerDate <= currentDate) {
+          markers[i].setMap(map); // Show marker
+          if (markerDate.getTime() === currentDate.getTime()) {
+            markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png'); // Green marker for latest date
+          } else {
+            markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png'); // Red marker for visited locations
+          }
+        } else {
+          markers[i].setMap(null); // Hide marker
+        }
+      }
+    }
+    
+  </script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+
+    .slider-container {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Visited Locations</h1>
+  <div class="slider-container">
+    <label for="dateSlider">Select Date:</label>
+    <div id="dataDisplay"></div>
+    <div id="dateSlider"></div>
+  </div>
+  <div id="map"></div>
+</body>
+</html>

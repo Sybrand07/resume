@@ -1,0 +1,50 @@
+function updateMarkers(sliderValue) {
+    const selectedDate = new Date(sliderValue);
+  
+    // Filter sample data based on selected date
+    const filteredData = sampleData.filter(data => new Date(data.date) <= selectedDate);
+  
+    // Keep track of markers to remove ones that are not applicable anymore
+    const markersToRemove = [];
+  
+    // Update existing markers and remove ones that are not applicable
+    markers.forEach(marker => {
+      const markerData = marker.getData(); // Assuming getData() retrieves the associated data for the marker
+      const markerDate = new Date(markerData.date);
+  
+      if (markerDate <= selectedDate) {
+        // Update marker properties if necessary
+        marker.setIcon(getPinColor(markerData.date, selectedDate));
+      } else {
+        // Markers not applicable anymore, add them to the removal list
+        markersToRemove.push(marker);
+      }
+    });
+  
+    // Remove markers that are not applicable anymore
+    markersToRemove.forEach(marker => {
+      marker.setMap(null);
+      markers.splice(markers.indexOf(marker), 1);
+    });
+  
+    // Add new markers for filtered data if necessary
+    filteredData.forEach(data => {
+      if (!markers.some(marker => marker.getData().date === data.date)) {
+        const pinColor = getPinColor(data.date, selectedDate);
+        const newMarker = new AdvancedMarkerElement({
+          map,
+          position: { lat: data.lat, lng: data.lng },
+          content: new PinElement({ background: pinColor }).element,
+          title: `${data.place}, ${data.Country}`, // Assuming Country is a property of the data
+          data: data // Store associated data with the marker
+        });
+        markers.push(newMarker);
+      }
+    });
+  }
+  
+  // Function to determine marker color based on date comparison
+  function getPinColor(markerDate, selectedDate) {
+    return new Date(markerDate) >= selectedDate ? GREEN_COLOR : RED_COLOR;
+  }
+  

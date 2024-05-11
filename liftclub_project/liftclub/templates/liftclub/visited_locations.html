@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venah's Travels Around the World</title>
+  <!-- Load the Google Maps JavaScript API with your API key -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    (g=>{
+      var h, a, k, p="The Google Maps JavaScript API", c="google", l="importLibrary", q="__ib__", m=document, b=window;
+      b=b[c]||(b[c]={});
+      var d=b.maps||(b.maps={}), r=new Set, e=new URLSearchParams;
+  
+      // Function to fetch API key asynchronously from a hidden document
+      var fetchApiKey = async () => {
+        // Fetching the API key from a JSON file
+        try {
+          var response = await fetch("/static/google_maps_api.json");
+          var data = await response.json();
+          return data.apiKey; // Assuming your API key is stored as "apiKey" in the JSON file
+        } catch(error) {
+          console.error('Error fetching API key:', error);
+          throw new Error(p + " could not load.");
+        }
+      };
+  
+      var u = () => h || (h = new Promise(async (f, n) => {
+        await (a = m.createElement("script"));
+        e.set("libraries", [...r]+"");
+        for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+        e.set("callback", c + ".maps." + q);
+        // Fetching the API key asynchronously
+        var apiKey = await fetchApiKey();
+        a.src = `https://maps.${c}apis.com/maps/api/js?key=${apiKey}&` + e;
+        d[q] = f;
+        a.onerror = () => h = n(Error(p + " could not load."));
+        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+        m.head.append(a);
+      }));
+  
+      d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n));
+    })({
+      v: "weekly"
+      // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+      // Add other bootstrap parameters as needed, using camel case.
+    });
+  </script>
+    
+  <!-- Load jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- Load jQuery UI for slider -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css"> <script>
+    // Initialize the map and other variables
+  
+    var map, markers = [];
+    var sliderMinDate, sliderMaxDate;
+    
+    // Define the sampleData array with provided data
+    const sampleData = [
+      { date: '04/11/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/11/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/19/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/19/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/20/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/20/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '06/20/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '07/06/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '07/06/2007' , place: 'Roissy Airport (Paris)' , Country: 'France', lat: 49.0097, lng: 2.5479 },
+      { date: '08/06/2007' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '08/06/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/08/2007' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '08/08/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/09/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/09/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/12/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/12/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/05/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '09/06/2007' , place: 'Chicago' , Country: 'USA', lat: 41.8781, lng: -87.6298 },
+      { date: '09/19/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/28/2007' , place: 'Lusaka International Airport' , Country: 'Zambia', lat: -15.3308, lng: 28.4583 },
+      { date: '10/28/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/01/2007' , place: 'Lusaka International Airport' , Country: 'Zambia', lat: -15.3308, lng: 28.4583 },
+      { date: '11/01/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/05/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '11/25/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '11/28/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/09/2007' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '12/13/2007' , place: 'Groblersbrug' , Country: 'Botswana', lat: -22.5408, lng: 29.3807 },
+      { date: '12/13/2007' , place: 'Martins Drift' , Country: 'Botswana', lat: -22.2817, lng: 21.6802 },
+      { date: '12/20/2007' , place: 'Springs Home Affairs' , Country: 'South Africa', lat: -26.2604, lng: 28.4344 },
+      { date: '12/26/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/26/2007' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '02/22/2008' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/08/2008' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7893, lng: 33.7804 },
+      { date: '03/08/2008' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '03/19/2008' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7893, lng: 33.7804 },
+      { date: '03/19/2008' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '03/19/2008' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '06/24/2008' , place: 'Angola' , Country: 'Angola', lat: -11.2027, lng: 17.8739 },
+      { date: '12/06/2008' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '12/06/2008' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '12/11/2008' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '12/11/2008' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '01/02/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '02/07/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/08/2009' , place: 'Geneve' , Country: 'Switzerland', lat: 46.2044, lng: 6.1432 },
+      { date: '02/12/2009' , place: 'Frankfurt' , Country: 'Germany', lat: 50.1109, lng: 8.6821 },
+      { date: '02/13/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/19/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '02/19/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '02/22/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '02/22/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/01/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/01/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/08/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/21/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/24/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/24/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/28/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/28/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/05/2009' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9318, lng: 31.0928 },
+      { date: '04/09/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '04/14/2009' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9318, lng: 31.0928 },
+      { date: '05/01/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/01/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/18/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '05/29/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '06/07/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '06/07/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '06/13/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '06/13/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/02/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/02/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/03/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/03/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/17/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/17/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/20/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/20/2009' , place: 'Machipanda' , Country: 'Mozambique', lat: -18.2993, lng: 32.7509 },
+      { date: '10/24/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/24/2009' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/24/2009' , place: 'Forbes Road' , Country: 'Zimbabwe', lat: -18.0056, lng: 31.0954 },
+      { date: '10/24/2009' , place: 'Machipanda' , Country: 'Mozambique', lat: -18.2993, lng: 32.7509 },
+      { date: '10/26/2009' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '10/26/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/31/2009' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '10/31/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/22/2009' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '11/22/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/25/2009' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '11/25/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/26/2009' , place: 'Martins Drift' , Country: 'Botswana', lat: -22.2817, lng: 21.6802 },
+      { date: '11/26/2009' , place: 'Plumtree Rail' , Country: 'Zimbabwe', lat: -20.489, lng: 27.8051 },
+      { date: '11/26/2009' , place: 'Plumtree Rail' , Country: 'Zimbabwe', lat: -20.489, lng: 27.8051 },
+      { date: '11/26/2009' , place: 'Ramokgwebana Border' , Country: 'Botswana', lat: -22.1235, lng: 29.3682 },
+      { date: '11/28/2009' , place: 'Groblersbrug' , Country: 'Botswana', lat: -22.5408, lng: 29.3807 },
+      { date: '11/28/2009' , place: 'Martins Drift' , Country: 'Botswana', lat: -22.2817, lng: 21.6802 },
+      { date: '11/28/2009' , place: 'Plumtree Rail' , Country: 'Zimbabwe', lat: -20.489, lng: 27.8051 },
+      { date: '11/28/2009' , place: 'Ramokgwebana Border' , Country: 'Botswana', lat: -22.1235, lng: 29.3682 },
+      { date: '12/01/2009' , place: 'Springs Home Affairs' , Country: 'South Africa', lat: -26.2604, lng: 28.4344 },
+      { date: '12/02/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '12/03/2009' , place: 'Frankfurt' , Country: 'Germany', lat: 50.1109, lng: 8.6821 },
+      { date: '12/04/2009' , place: 'Frankfurt' , Country: 'Germany', lat: 50.1109, lng: 8.6821 },
+      { date: '12/05/2009' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/05/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '02/15/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/16/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '02/16/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/20/2010' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '02/20/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/22/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '03/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '03/21/2010' , place: 'Chirundu' , Country: 'Zambia', lat: -16.0322, lng: 28.8039 },
+      { date: '03/21/2010' , place: 'Chirundu' , Country: 'Zambia', lat: -16.0322, lng: 28.8039 },
+      { date: '03/26/2010' , place: 'Chirundu' , Country: 'Zambia', lat: -16.0322, lng: 28.8039 },
+      { date: '03/26/2010' , place: 'Chirundu' , Country: 'Zimbabwe', lat: -16.0322, lng: 28.8039 },
+      { date: '04/18/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/18/2010' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '04/24/2010' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '04/24/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '04/28/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/28/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/01/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/01/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/06/2010' , place: 'Ressano Garcia' , Country: 'Mozambique', lat: -25.4435, lng: 31.9915 },
+      { date: '05/11/2010' , place: 'Ressano Garcia' , Country: 'Mozambique', lat: -25.4435, lng: 31.9915 },
+      { date: '05/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '05/24/2010' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '05/24/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '05/28/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '06/06/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '06/11/2010' , place: 'Lebombo' , Country: 'Swaziland', lat: -25.4395, lng: 31.9991 },
+      { date: '08/11/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '08/11/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/12/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '08/12/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/31/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/31/2010' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '09/04/2010' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '09/08/2010' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '09/11/2010' , place: 'Mavalane' , Country: 'Mozambique', lat: -25.92, lng: 32.5742 },
+      { date: '09/11/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '09/13/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/13/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/27/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '09/27/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '09/30/2010' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0174, lng: 28.6174 },
+      { date: '09/30/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/04/2010' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '10/04/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/08/2010' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '10/08/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/09/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/19/2010' , place: 'Lilongwe' , Country: 'Malawi', lat: -13.9632, lng: 33.7741 },
+      { date: '10/19/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/22/2010' , place: 'Lilongwe' , Country: 'Malawi', lat: -13.9632, lng: 33.7741 },
+      { date: '10/22/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/25/2010' , place: 'Julius Nyerere International Airport' , Country: 'Tanzania', lat: -13.9632, lng: 33.7741 },
+      { date: '10/25/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/30/2010' , place: 'Julius Nyerere International Airport' , Country: 'Tanzania', lat: -13.9632, lng: 33.7741 },
+      { date: '11/01/2010' , place: 'Lusaka International Airport' , Country: 'Zambia', lat: -15.3308, lng: 28.4583 },
+      { date: '11/01/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/05/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/07/2010' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/09/2010' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '11/10/2010' , place: 'Lusaka International Airport' , Country: 'Zambia', lat: -15.3308, lng: 28.4583 },
+      { date: '11/11/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '11/11/2010' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.5649, lng: 17.0805 },
+      { date: '11/14/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '11/14/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/01/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/17/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/26/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/26/2010' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '01/30/2011' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '01/30/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/06/2011' , place: 'Jomo Kenyatta International Airport' , Country: 'Kenya', lat: -1.3192, lng: 36.9273 },
+      { date: '02/06/2011' , place: 'Kotoka International Airport' , Country: 'Ghana', lat: 5.6052, lng: -0.1674 },
+      { date: '02/10/2011' , place: 'Kotoka International Airport' , Country: 'Ghana', lat: 5.6052, lng: -0.1674 },
+      { date: '02/11/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/21/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '02/22/2011' , place: 'Frankfurt' , Country: 'Germany', lat: 50.1109, lng: 8.6821 },
+      { date: '02/25/2011' , place: 'Frankfurt' , Country: 'Germany', lat: 50.1109, lng: 8.6821 },
+      { date: '02/26/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '04/20/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/20/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/27/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/27/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '04/30/2011' , place: 'Lebombo' , Country: 'Swaziland', lat: -25.4395, lng: 31.9991 },
+      { date: '04/30/2011' , place: 'Ressano Garcia' , Country: 'Mozambique', lat: -25.4435, lng: 31.9915 },
+      { date: '05/01/2011' , place: 'Ressano Garcia' , Country: 'Mozambique', lat: -25.4435, lng: 31.9915 },
+      { date: '06/06/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '06/07/2011' , place: 'Washington' , Country: 'USA', lat: 38.9072, lng: -77.0369 },
+      { date: '07/03/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '07/21/2011' , place: 'Livingstone International Airport' , Country: 'Zambia', lat: -17.8219, lng: 25.8223 },
+      { date: '07/21/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '07/27/2011' , place: 'Livingstone International Airport' , Country: 'Zambia', lat: -17.8219, lng: 25.8223 },
+      { date: '07/27/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '08/26/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/26/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/28/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '08/28/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/14/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/14/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '09/18/2011' , place: 'Machipanda' , Country: 'Mozambique', lat: -18.2993, lng: 32.7509 },
+      { date: '09/21/2011' , place: 'Machipanda' , Country: 'Mozambique', lat: -18.2993, lng: 32.7509 },
+      { date: '09/24/2011' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9318, lng: 31.0928 },
+      { date: '09/24/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '09/30/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '10/01/2011' , place: 'New York City' , Country: 'USA', lat: 40.7128, lng: -74.006 },
+      { date: '10/22/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/22/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/24/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '10/24/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '11/03/2011' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9318, lng: 31.0928 },
+      { date: '11/03/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '11/05/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '11/05/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/08/2011' , place: 'Chileka International Airport' , Country: 'Malawi', lat: -15.6762, lng: 34.9728 },
+      { date: '11/15/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '11/15/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '11/16/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '11/27/2011' , place: 'Lilongwe' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '11/27/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/30/2011' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '12/01/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '12/23/2011' , place: 'Groblersbrug' , Country: 'South Africa', lat: -22.2117, lng: 29.2278 },
+      { date: '12/23/2011' , place: 'Martins Drift' , Country: 'Botswana', lat: -22.0305, lng: 29.2109 },
+      { date: '12/24/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '12/24/2011' , place: 'Ramokgwebana Border' , Country: 'Botswana', lat: -26.4049, lng: 25.7108 },
+      { date: '12/26/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '12/26/2011' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/03/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/27/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2146, lng: 30.003 },
+      { date: '01/27/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/27/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/30/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '02/23/2012' , place: 'Maputo Intl Airport (Mavalane)' , Country: 'Mozambique', lat: -25.9205, lng: 32.5723 },
+      { date: '02/23/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/28/2012' , place: 'Maputo Intl Airport (Mavalane)' , Country: 'Mozambique', lat: -25.9205, lng: 32.5723 },
+      { date: '03/20/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '03/21/2012' , place: 'New York City' , Country: 'USA', lat: 40.7128, lng: -74.006 },
+      { date: '05/20/2012' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '05/20/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '05/25/2012' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '05/25/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '06/20/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '06/20/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '06/24/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '06/24/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '07/24/2012' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '07/24/2012' , place: 'Mchinji Border' , Country: 'Malawi', lat: -13.8136, lng: 32.8879 },
+      { date: '07/24/2012' , place: 'Mwami Border Control' , Country: 'Malawi', lat: -10.6163, lng: 34.1582 },
+      { date: '07/24/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '07/28/2012' , place: 'Mchinji Border' , Country: 'Malawi', lat: -13.8136, lng: 32.8879 },
+      { date: '07/28/2012' , place: 'Mwami Border Control' , Country: 'Malawi', lat: -10.6163, lng: 34.1582 },
+      { date: '07/29/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1372, lng: 28.2411 },
+      { date: '07/29/2012' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '07/29/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/03/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '09/25/2012' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '09/25/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/28/2012' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '09/28/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/30/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/03/2012' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '10/03/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/13/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/13/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/20/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/20/2012' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/31/2012' , place: 'Lebombo' , Country: 'Mozambique', lat: -25.4256, lng: 31.9855 },
+      { date: '10/31/2012' , place: 'Ressano Garcia' , Country: 'Mozambique', lat: -25.444, lng: 31.9899 },
+      { date: '11/04/2012' , place: 'Maputo Intl Airport (Mavalane)' , Country: 'Mozambique', lat: -25.9205, lng: 32.5723 },
+      { date: '11/04/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '12/26/2012' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '12/26/2012' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '12/28/2012' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '01/02/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/07/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/07/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '01/21/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '02/23/2013' , place: 'Nampula' , Country: 'Mozambique', lat: -15.1053, lng: 39.2902 },
+      { date: '02/23/2013' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/27/2013' , place: 'Nampula' , Country: 'Mozambique', lat: -15.1053, lng: 39.2902 },
+      { date: '05/26/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '05/26/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '05/30/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '05/30/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '07/22/2013' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '08/28/2013' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '08/28/2013' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/03/2013' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '10/03/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/03/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/08/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '10/08/2013' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '11/10/2013' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '11/10/2013' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/12/2013' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '11/12/2013' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/02/2014' , place: 'Oshoek' , Country: 'Eswatini', lat: -26.1, lng: 31.4667 },
+      { date: '02/05/2014' , place: 'Oshoek' , Country: 'Eswatini', lat: -26.1, lng: 31.4667 },
+      { date: '08/14/2014' , place: 'Arlanda' , Country: 'Sweden', lat: 59.6519, lng: 17.9186 },
+      { date: '09/14/2014' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '09/28/2014' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '09/28/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/02/2014' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '10/02/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/05/2014' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '10/05/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/08/2014' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '10/08/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/13/2014' , place: 'Kopfontein' , Country: 'South Africa', lat: -25.8255, lng: 25.9296 },
+      { date: '10/15/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/15/2014' , place: 'Sir Seretse Khama International Airport' , Country: 'Botswana', lat: -24.5552, lng: 25.9196 },
+      { date: '10/18/2014' , place: 'Tlokweng' , Country: 'Botswana', lat: -24.6293, lng: 25.9085 },
+      { date: '11/30/2014' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '05/09/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '05/09/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '05/17/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '05/17/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '05/21/2017' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '05/21/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '05/27/2017' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '05/27/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '06/20/2017' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '06/20/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '06/24/2017' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '06/24/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '07/15/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '07/16/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '07/22/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '07/22/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/24/2017' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '09/24/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/30/2017' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '09/30/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/09/2017' , place: 'Julius Nyerere International Airport' , Country: 'Tanzania', lat: -6.8751, lng: 39.2026 },
+      { date: '10/09/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/14/2017' , place: 'Julius Nyerere International Airport' , Country: 'Tanzania', lat: -6.8751, lng: 39.2026 },
+      { date: '10/14/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/24/2017' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '10/24/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/27/2017' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '10/27/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/22/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '11/22/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/25/2017' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '11/25/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/28/2017' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '11/28/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/30/2017' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '11/30/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '12/14/2017' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '12/15/2017' , place: 'Dallas' , Country: 'USA', lat: 32.7767, lng: -96.797 },
+      { date: '01/04/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/03/2018' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '02/03/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/09/2018' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '02/09/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '03/18/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '03/21/2018' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '03/24/2018' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '03/24/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '04/09/2018' , place: 'Maputo Intl Airport (Mavalane)' , Country: 'Mozambique', lat: -25.9205, lng: 32.5723 },
+      { date: '04/09/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '04/11/2018' , place: 'Maputo Intl Airport (Mavalane)' , Country: 'Mozambique', lat: -25.9205, lng: 32.5723 },
+      { date: '04/11/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '04/18/2018' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '04/21/2018' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '04/21/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '04/23/2018' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '04/23/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '04/25/2018' , place: 'Hosea Kutaro Airport' , Country: 'Namibia', lat: -22.4849, lng: 17.4769 },
+      { date: '04/25/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '07/02/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '07/20/2018' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '07/22/2018' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '08/31/2018' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '08/31/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '09/02/2018' , place: 'Harare International Airport' , Country: 'Zimbabwe', lat: -17.9326, lng: 31.0927 },
+      { date: '09/02/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '10/08/2018' , place: 'Ngwenya' , Country: 'Eswatini', lat: -26.1145, lng: 31.1022 },
+      { date: '10/08/2018' , place: 'Oshoek' , Country: 'Eswatini', lat: -26.1, lng: 31.4667 },
+      { date: '10/10/2018' , place: 'Ngwenya' , Country: 'Eswatini', lat: -26.1145, lng: 31.1022 },
+      { date: '10/10/2018' , place: 'Oshoek' , Country: 'Eswatini', lat: -26.1, lng: 31.4667 },
+      { date: '11/20/2018' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '11/20/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/22/2018' , place: 'Kamuzu International Airport' , Country: 'Malawi', lat: -13.7894, lng: 33.7819 },
+      { date: '11/22/2018' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/26/2018' , place: 'Kopfontein' , Country: 'South Africa', lat: -25.8255, lng: 25.9296 },
+      { date: '11/26/2018' , place: 'Tlokweng' , Country: 'Botswana', lat: -24.6293, lng: 25.9085 },
+      { date: '11/28/2018' , place: 'Kopfontein' , Country: 'South Africa', lat: -25.8255, lng: 25.9296 },
+      { date: '11/28/2018' , place: 'Tlokweng' , Country: 'Botswana', lat: -24.6293, lng: 25.9085 },
+      { date: '02/01/2019' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '02/01/2019' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/01/2019' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/06/2019' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '02/06/2019' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '02/06/2019' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/06/2019' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '02/12/2019' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '02/12/2019' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '02/12/2019' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '02/15/2019' , place: 'Beitbridge' , Country: 'Zimbabwe', lat: -22.2189, lng: 30.0027 },
+      { date: '03/29/2019' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 },
+      { date: '11/16/2019' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '11/17/2019' , place: 'Los Angeles' , Country: 'USA', lat: 34.0522, lng: -118.2437 },
+      { date: '01/16/2020' , place: 'O.R. Tambo' , Country: 'South Africa', lat: -26.1367, lng: 28.2411 },
+      { date: '01/31/2020' , place: 'Bulawayo Airport' , Country: 'Zimbabwe', lat: -20.0169, lng: 28.6178 }
+    ];
+
+    // Utility function for handling dates
+    const formatDateForSlider = (dateString) => {
+        const [month, day, year] = dateString.split('/');
+        return new Date(year, month - 1, day); // Months are zero-indexed
+    };
+
+    // Constants
+    const GREEN_COLOR = "#00FF00";
+    const RED_COLOR = "#FF0000"  // const YELLOW_COLOR = "#FFFF00";
+
+    // Process sample data
+    var timestamps = sampleData.map(data => new Date(data.date).getTime());
+    sliderMinDate = Math.min(...timestamps);
+    sliderMaxDate = Math.max(...timestamps);
+
+    async function initMap() {
+      // Request needed libraries.
+      const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+      const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+      const map = new Map(document.getElementById("map"), {
+        center: { lat: 0, lng: 0 },
+        zoom: 2,
+        mapId: "YOUR_MAP_ID",
+      });
+
+      $("#dateSlider").slider({
+        range: 'min',
+        min: sliderMinDate,
+        max: sliderMaxDate,
+        slide: function(event, ui) {
+            updateDataDisplay(ui.value);
+            updateMarkers(ui.value);
+        }
+      });
+      
+      var markers = []; // Define markers array
+      
+      // Create an info window to share between markers.
+      const infoWindow = new InfoWindow();
+      
+      function updateMarkers(sliderValue) {
+        
+        const selectedDate = new Date(sliderValue);
+
+        // Filter sample data based on selected date
+        const filteredData = sampleData.filter(data => new Date(data.date) <= selectedDate);
+        
+        // Get the IDs of the filtered data
+        const filteredIds = filteredData.map(data => data.id);
+        
+        // Remove markers that are no longer applicable
+        markers.forEach(marker => {
+          const markerId = marker.id; // Get marker ID
+          if (!filteredIds.includes(markerId)) {
+            marker.setMap(null); // Remove marker from the map
+          }
+        });
+
+        // Update the code where you create markers to make them clickable and specify a title
+        filteredData.forEach(data => {
+            const dataId = data.id; // Get data ID
+            // Check if marker already exists
+            const existingMarker = markers.find(marker => marker.id === dataId);
+            if (!existingMarker) {
+                // Create new marker
+                const pinColor = new Date(data.date) >= selectedDate ? GREEN_COLOR : RED_COLOR;
+                const newMarker = new AdvancedMarkerElement({
+                    map,
+                    position: { lat: data.lat, lng: data.lng },
+                    content: new PinElement({ background: pinColor }).element,
+                    title: `${data.place}, ${data.Country}, ${data.date}`, // Specify a title for the marker
+                    gmpClickable: true, // Make the marker clickable
+                });
+                // Assign an ID to the marker
+                newMarker.id = dataId;
+                markers.push(newMarker); // Add marker to the markers array
+            }
+        });
+        
+        // Add click event listeners to each marker
+        markers.forEach(marker => {
+            marker.addListener('click', function(event) {
+                const { domEvent, latLng } = event;
+                const { target } = domEvent;
+
+                infoWindow.close();
+                infoWindow.setContent(marker.title);
+                infoWindow.open(marker.map, marker);
+                
+            });
+        });
+        
+        
+      }
+
+    
+
+      
+
+    
+
+      
+      
+    }
+
+    function updateDataDisplay(startDate) {
+      var currentDate = new Date(startDate);
+
+      // Clear previous data display
+      $('#dataDisplay').empty();
+
+      // Format date as dd/mm/yyyy
+      var formattedDate = formatDate(currentDate);
+
+      // Display the formatted date
+      $('#dataDisplay').append(`<p>Selected Date: ${formattedDate}</p>`);
+
+      // Filter data for the selected date
+      var displayData = sampleData.filter(item => {
+        var itemDate = new Date(item.date);
+        return itemDate.toDateString() === currentDate.toDateString();
+      });
+
+      // Display new data if available
+      if (displayData.length > 0) {
+        displayData.forEach(item => {
+          $('#dataDisplay').append(`<p>Date: ${formattedDate}, Place: ${item.place}, Country: ${item.Country}</p>`);
+        });
+      } else {
+        $('#dataDisplay').append(`<p>No data available for ${formattedDate}</p>`);
+      }
+
+      // Update timeline
+      updateTimeline(sliderMinDate, sliderMaxDate);
+    }
+
+        
+    // Update timeline function
+    function updateTimeline(startDate, endDate) {
+      var timeline = $('#timeline');
+      timeline.empty();
+      
+      // Calculate the range of dates
+      var start = new Date(startDate);
+      var end = new Date(endDate);
+      
+      // Calculate the number of years between start and end dates
+      var startYear = start.getFullYear();
+      var endYear = end.getFullYear();
+      var years = endYear - startYear + 1;
+
+      // Generate buttons for each year
+      for (var i = 0; i < years; i++) {
+        var year = startYear + i;
+        var button = $('<button class="year-button"></button>').text(year);
+        button.data('year', year);
+        button.click(function() {
+          var selectedYear = $(this).data('year');
+          // Calculate the corresponding slider value for the selected year
+          var sliderValue = getSliderValueForYear(selectedYear);
+          // Update the slider value
+          $("#dateSlider").slider("value", sliderValue);
+          // Trigger slide event manually
+          $("#dateSlider").slider("option", "slide")(null, { value: sliderValue });
+        });
+        timeline.append(button);
+      }
+    }
+
+    // Function to calculate the slider value for a given year
+    function getSliderValueForYear(year) {
+      // Your logic to calculate the slider value for the given year goes here
+      // For simplicity, assuming a linear scale
+      var minYear = new Date(sliderMinDate).getFullYear();
+      var maxYear = new Date(sliderMaxDate).getFullYear();
+      var sliderRange = sliderMaxDate - sliderMinDate;
+      var yearRange = maxYear - minYear;
+      var yearOffset = year - minYear;
+      return sliderMinDate + (yearOffset / yearRange) * sliderRange;
+    }
+    
+
+    function formatDate(date) {
+      var day = String(date.getDate()).padStart(2, '0');
+      var month = String(date.getMonth() + 1).padStart(2, '0');
+      var year = date.getFullYear();
+      return day + '/' + month + '/' + year;
+    }
+
+  
+    
+    
+
+    // Initialize the map
+    initMap();
+  </script>
+   <style>
+    /* Modern dark theme */
+    body {
+      background-color: #282c34; /* Dark background color */
+      color: #abb2bf; /* Light text color */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #61afef; /* Blue heading color */
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #c678dd; /* Purple heading color */
+      margin-bottom: 10px;
+    }
+
+    .slider-container {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #44475a; /* Dark border */
+      border-radius: 5px;
+      background-color: #282c34; /* Dark background color */
+    }
+
+    #dataDisplay {
+      min-height: 120px;
+      background-color: #3e4452; /* Darker background color */
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    label {
+      font-size: 1rem;
+      color: #abb2bf;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    #timeline {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .tick {
+      padding: 5px;
+      font-size: 0.9rem;
+      color: #5c6370; /* Gray tick color */
+    }
+
+    .year-button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #61afef; /* Blue button color */
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .year-button:hover {
+      background-color: #1f5582; /* Darker blue on hover */
+    }
+    
+    #map {
+      height: 800px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Venah's Travels Around the World</h1>
+  <h2>Visited Locations</h2>
+  <div class="slider-container">
+    <div id="dataDisplay"></div>
+    <label for="dateSlider">Select Date Range:</label>
+    <div id="dateSlider"></div>
+    <div id="timeline"></div>
+  </div>
+  <div id="map"></div>
+</body>
+</html>
+  

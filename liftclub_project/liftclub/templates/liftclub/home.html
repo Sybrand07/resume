@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lift Club App</title>
+</head>
+<body>
+    <h1>Lift Club App</h1>
+    <!-- Display the form for requesting a ride -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- Render form fields -->
+        <button type="submit">Request Ride</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plan Your Trip</title>
+  <!-- Load the Google Maps JavaScript API with your API key: AIzaSyBEUgmbZzflJsn-886sndbAeDkTRsgPZO8-->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEUgmbZzflJsn-886sndbAeDkTRsgPZO8&callback=initMap" async defer></script>
+  <script>
+    // Get the CSRF token from the cookie
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Check if the cookie contains the CSRF token
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    // Global variables to store markers for pickup and destination
+    var map, pickupMarker, destinationMarker, checkpointMarker;
+    var directionsService, directionsRenderer;
+    
+    function initMap() {
+      // Initialize the map
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -33.918861, lng: 18.423300}, //remember that latitude is North to South. Minus indicates "South" of the equator. Longitude is West to East. + still indicates East.
+        zoom: 12
+      });
+    
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+
+      // Add a listener for click events on the map
+      map.addListener('click', function(event) {
+        // Get the selected location type from the button
+        var locationType = document.getElementById('pickupButton').classList.contains('active') ? 'pickup' : 
+                           document.getElementById('destinationButton').classList.contains('active') ? 'destination' : 
+                           'checkpoint';
+        placeMarker(event.latLng, locationType);
+      });
+
+      toggleButton('pickup');
+    }
+    // Function to place a marker for pickup or destination location
+    function placeMarker(location, locationType) {
+      // Remove existing marker of the same type
+      if (locationType === 'pickup' && pickupMarker) {
+        pickupMarker.setMap(null);
+      } else if (locationType === 'destination' && destinationMarker) {
+        destinationMarker.setMap(null);
+      } else if (locationType === 'checkpoint' && checkpointMarker) {
+        checkpointMarker.setMap(null);
+      }
+        
+      var iconUrl = locationType === 'pickup' ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 
+                  locationType === 'destination' ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' :
+                  'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+
+      // Create a marker for the selected location type
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        icon: iconUrl
+      });
+        
+      // Store the marker reference in the appropriate global variable
+      if (locationType === 'pickup') {
+        pickupMarker = marker;
+      } else if (locationType === 'destination') {
+        destinationMarker = marker;
+      } else if (locationType === 'checkpoint') {
+        checkpointMarker = marker;
+      }
+      
+      if (pickupMarker && destinationMarker) {
+        calculateAndDisplayRoute();
+      }
+    }
+      
+    // Send AJAX request to save location
+    sendLocation(location.lat(), location.lng(), locationType);
+    
+
+    // Function to calculate and display route between pickup and destination
+    function calculateAndDisplayRoute() {
+      // Snap pickup and destination to nearest road segments
+      var start = pickupMarker.getPosition();
+      var end = destinationMarker.getPosition();
+      var waypoint = checkpointMarker ? [{ location: checkpointMarker.getPosition(), stopover: true }] : [];
+
+      directionsService.route({
+        origin: start,
+        destination: end,
+        waypoints: waypoint,
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING'
+      }, function(response, status) {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
+       
+    // Function to send location coordinates to server via AJAX
+    function sendLocation(latitude, longitude, locationType) {
+      // Create a new XMLHttpRequest (XHR) object
+      var xhr = new XMLHttpRequest();
+
+      // Open a POST request (sending data to server) to the specified URL ("/save-location/")
+      xhr.open('POST', '/save-location/', true);
+
+      // Set the request header to indicate JSON data
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      // Define the onload event handler to handle the response
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('Location saved successfully');
+        } else {
+          console.error('Failed to save location');
+        }
+      };
+      // Convert the latitude and longitude to JSON format and send the request
+      xhr.send(JSON.stringify({latitude: latitude, longitude: longitude, locationType: locationType}));
+    }
+    
+    function toggleButton(locationType) {
+      var pickupButton = document.getElementById('pickupButton');
+      var destinationButton = document.getElementById('destinationButton');
+      var checkpointButton = document.getElementById('checkpointButton');
+      
+      pickupButton.classList.remove('active');
+      destinationButton.classList.remove('active');
+      checkpointButton.classList.remove('active');
+
+      if (locationType === 'pickup') {
+        pickupButton.classList.add('active');
+      } else if (locationType === 'destination') {
+        destinationButton.classList.add('active');
+      } else if (locationType === 'checkpoint') {
+        checkpointButton.classList.add('active');
+      }
+    }
+
+  </script>
+   <style>
+    /* Style for the map container */
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+
+    .button-container {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .location-button {
+      display: inline-block;
+      margin: 0 5px; /* Adjust horizontal margin */
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+
+    .location-button.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .button-separator {
+      margin: 5px 0; /* Adjust vertical margin */
+      width: 50px; /* Adjust separator width */
+    }
+
+    /* Adjust the appearance of the separators */
+    .button-separator:before {
+      content: '-';
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      color: black;
+    }
+
+    /* Remove separator for last button */
+    .location-button:last-child .button-separator {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Display the selector for choosing location type -->
+  <h1>Plan Your Trip</h1>
+  <div class="button-container">
+    <button id="pickupButton" class="location-button" onclick="toggleButton('pickup')">Pickup</button>
+    <div class="button-separator"></div>
+    <button id="checkpointButton" class="location-button" onclick="toggleButton('checkpoint')">Checkpoint</button>
+    <div class="button-separator"></div>
+    <button id="destinationButton" class="location-button" onclick="toggleButton('destination')">Destination</button>
+  </div>
+  <div id="map"></div>
+</body>
+</html>
