@@ -16,7 +16,7 @@
       var fetchApiKey = async () => {
         // Fetching the API key from a JSON file
         try {
-          var response = await fetch("/static/google_maps_api.json");
+          var response = await fetch("/resume/liftclub_project/liftclub/google_maps_api.json");
           var data = await response.json();
           return data.apiKey; // Assuming your API key is stored as "apiKey" in the JSON file
         } catch(error) {
