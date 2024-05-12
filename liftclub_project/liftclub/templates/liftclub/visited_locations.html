@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Venah's Travels Around the World</title>
   <!-- Load the Google Maps JavaScript API with your API key -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -16,7 +16,7 @@
       var fetchApiKey = async () => {
         // Fetching the API key from a JSON file
         try {
-          var response = await fetch("/resume/liftclub_project/liftclub/static/google_maps_api.json");
+          var response = await fetch("/static/google_maps_api.json");
           var data = await response.json();
           return data.apiKey; // Assuming your API key is stored as "apiKey" in the JSON file
         } catch(error) {
@@ -496,10 +496,12 @@
       const { Map, InfoWindow } = await google.maps.importLibrary("maps");
       const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
       const map = new Map(document.getElementById("map"), {
-        center: { lat: 0, lng: 0 },
+        center: { lat: 4.3622, lng: 18.5828 }, // Bangui, Central African Republic (center map)
         zoom: 2,
         mapId: "YOUR_MAP_ID",
       });
+
+      
 
       $("#dateSlider").slider({
         range: 'min',
@@ -510,7 +512,7 @@
             updateMarkers(ui.value);
         }
       });
-      
+    
       var markers = []; // Define markers array
       
       // Create an info window to share between markers.
@@ -536,10 +538,18 @@
 
         // Update the code where you create markers to make them clickable and specify a title
         filteredData.forEach(data => {
+            console.log("Data Object:", data); // Add this console log
             const dataId = data.id; // Get data ID
             // Check if marker already exists
-            const existingMarker = markers.find(marker => marker.id === dataId);
-            if (!existingMarker) {
+            const existingMarkerIndex = markers.findIndex(marker => marker.id === dataId);
+            if (existingMarkerIndex !== -1) {
+                // Marker already exists
+                const existingMarker = markers[existingMarkerIndex];
+                // Update marker color if date is equal to selected date
+                if (new Date(data.date).getTime() === selectedDate.getTime()) {
+                    existingMarker.content = new PinElement({ background: GREEN_COLOR }).element;
+                }
+            } else {
                 // Create new marker
                 const pinColor = new Date(data.date) >= selectedDate ? GREEN_COLOR : RED_COLOR;
                 const newMarker = new AdvancedMarkerElement({
@@ -554,6 +564,12 @@
                 markers.push(newMarker); // Add marker to the markers array
             }
         });
+
+
+
+
+
+
         
         // Add click event listeners to each marker
         markers.forEach(marker => {
@@ -602,7 +618,7 @@
       // Display new data if available
       if (displayData.length > 0) {
         displayData.forEach(item => {
-          $('#dataDisplay').append(`<p>Date: ${formattedDate}, Place: ${item.place}, Country: ${item.Country}</p>`);
+          $('#dataDisplay').append(`<p>${item.place}, ${item.Country}</p>`);
         });
       } else {
         $('#dataDisplay').append(`<p>No data available for ${formattedDate}</p>`);
@@ -665,9 +681,40 @@
       return day + '/' + month + '/' + year;
     }
 
-  
+    $(document).ready(function() {
+       // Hide the message when the navigation pane is clicked
+        $('#dateSlider').click(function() {
+            $('#initiateMessage').hide();
+        });
+       
+        $('#prevDateBtn').click(function() {
+            // Get the current value of the slider
+            var currentValue = $('#dateSlider').slider('value');
+            // Decrement the current date by one day
+            var newDate = new Date(currentValue);
+            newDate.setDate(newDate.getDate() - 1);
+            // Update the slider value
+            $('#dateSlider').slider('value', newDate.getTime());
+            // Trigger the slide event manually
+            $('#dateSlider').slider('option', 'slide')(null, { value: newDate.getTime() });
+        });
+
+        $('#nextDateBtn').click(function() {
+            // Get the current value of the slider
+            var currentValue = $('#dateSlider').slider('value');
+            // Increment the current date by one day
+            var newDate = new Date(currentValue);
+            newDate.setDate(newDate.getDate() + 1);
+            // Update the slider value
+            $('#dateSlider').slider('value', newDate.getTime());
+            // Trigger the slide event manually
+            $('#dateSlider').slider('option', 'slide')(null, { value: newDate.getTime() });
+        });
+
+        
+    });
     
-    
+   
 
     // Initialize the map
     initMap();
@@ -683,6 +730,7 @@
     }
 
     h1 {
+      margin-left: 20px;
       font-size: 2rem;
       font-weight: bold;
       color: #61afef; /* Blue heading color */
@@ -690,26 +738,36 @@
     }
 
     h2 {
+      margin-left: 20px;
       font-size: 1.5rem;
       font-weight: bold;
       color: #c678dd; /* Purple heading color */
       margin-bottom: 10px;
     }
 
+    #map {
+      margin-left: 20px;
+      margin-right: 20px;
+      height: 400px;
+    }
+
     .slider-container {
-      margin: 20px;
-      padding: 20px;
+      margin-top: 10px;
+      margin-left: 20px; /* Center align */
+      margin-right: 20px; /* Center align */
+      
       border: 1px solid #44475a; /* Dark border */
       border-radius: 5px;
       background-color: #282c34; /* Dark background color */
     }
 
     #dataDisplay {
-      min-height: 120px;
+      min-height: 60px;
       background-color: #3e4452; /* Darker background color */
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      display: flex; /* Use flexbox */
+      justify-content: space-between; /* Add space between elements */
+      align-content: flex-start; /* Add space between lines */
+      flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
     }
 
     label {
@@ -723,6 +781,7 @@
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
+      overflow-x: auto; /* Horizontal scroll for small screens */
     }
 
     .tick {
@@ -744,23 +803,37 @@
     .year-button:hover {
       background-color: #1f5582; /* Darker blue on hover */
     }
-    
-    #map {
-      height: 800px;
-      width: 100%;
+
+    .navigation-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    #dateSlider {
+        flex: 1;
+    }
+
+    #prevDateBtn,
+    #nextDateBtn {
+        margin: 0; /* Adjust the margin as needed */
     }
   </style>
 </head>
 <body>
   <h1>Venah's Travels Around the World</h1>
   <h2>Visited Locations</h2>
+  <div id="map"></div>
   <div class="slider-container">
     <div id="dataDisplay"></div>
-    <label for="dateSlider">Select Date Range:</label>
-    <div id="dateSlider"></div>
+    <p id="initiateMessage">Please click on the navigation pane to initiate display</p>
+    <label for="dateSlider"></label>
+    <div class="navigation-buttons">
+      <button id="prevDateBtn">◄</button>
+      <div id="dateSlider"></div>
+      <button id="nextDateBtn">►</button>
+    </div>
     <div id="timeline"></div>
   </div>
-  <div id="map"></div>
 </body>
 </html>
   
