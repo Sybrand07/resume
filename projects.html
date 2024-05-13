@@ -37,7 +37,7 @@
 
     <section id="Projects" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
         <div class="angled-crop-top-negative">
-            <img src="images/projects.jpg" alt="Projects Image"> 
+            <img src="images/Projects.jpg" alt="Projects Image"> 
         </div>
     </section>
 
@@ -46,8 +46,21 @@
         <h3>Feel free to explore the functionality!</h3>
     </section>
 
-    <section>
-        <div class="publications">
+    <section id="project-index">
+        <h2>Project Index</h2>
+        <ol>
+            <li><a href="#venahs-travels">Venah's travels</a></li>
+            <li><a href="#liftclub-app">Liftclub App</a></li>
+            <li><a href="#automated-qa-for-chatgpt">Automated Q&A for ChatGPT</a></li>
+            <li><a href="#automated-clinical-study-report">Automated Clinical Study Report</a></li>
+            <li><a href="#excel-macro-remove-columns">Excel Macro: Remove Columns</a></li>
+            <li><a href="#excel-macro-format-worksheet">Excel Macro: Format Worksheet</a></li>
+            <li><a href="#autohotkey">AutoHotkey</a></li>
+        </ol>
+    </section>
+
+    
+    <section id="venahs-travels" class="content-section">
             <table>
             <tr>
                 <th>Project</th>
@@ -56,7 +69,7 @@
             </tr>
             <tr>
                 <td>Venah's travels</td>
-                <td>An interactive map displaying places visited to date.</td>
+                <td>An interactive map displaying places visited by my mother-in-law to date.</td>
                 <td>
                     <ul class="bulleted-list-table">
                         <li>Slider bar with arrows for timeline navigation.</li>
@@ -68,15 +81,13 @@
                 </td>
             </tr>
             </table>
-        </div>
     </section>
 
     <section id="webbox" class="content-section">
         <iframe src="liftclub_project/liftclub/templates/liftclub/visited_locations.html" width="100%" height="600px" frameborder="0"></iframe>
     </section>
 
-    <section>
-        <div class="publications">
+    <section id="liftclub-app" class="content-section">
             <table>
             <tr>
                 <th>Project</th>
@@ -89,16 +100,13 @@
                 <td><a href="https://code.visualstudio.com/download">Download Visual Studio Code</a></td>
             </tr>
             </table>
-        
-        </div>
     </section>
 
     <section id="webbox" class="content-section">
         <iframe src="update-in-progress.html" width="100%" height="600px" frameborder="0"></iframe>
     </section>
 
-    <section>
-        <div class="publications">
+    <section id="automated-qa-for-chatgpt" class="content-section">
             <table>
             <tr>
                 <th>Project</th>
@@ -118,15 +126,114 @@
                 </td>
             </tr>
             </table>
-        </div>
     </section>
     
-    <section id="autochatgpt" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/autochatgpt.jpg" alt="AutoChatGPT Image" width="100%"> 
+    <section id="projects_images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <img src="images/autochatgpt.jpg" alt="AutoChatGPT Image" width="100%">
+    </section>
+
+    <section id="automated-clinical-study-report" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Automated Clinical Study Report</td>
+                    <td>Generates a comprehensive report of any article.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <p>Report includes:</p>
+                            <li>200 word structured abstract</li>
+                            <li>Study characteristics</li>
+                            <li>End points and results</li>
+                            <li>Safety parameters </li>
+                            <li>Key take-homes</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+    </section>
+
+    <section id="projects_images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <img src="images/autoreportclinical.jpg" alt="AutoReport Clinical Image" width="100%">
     </section>
 
     <!-- Add more sections for additional resources -->
 
+    <section id="excel-macro-remove-columns" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Excel Macro: Remove Columns</td>
+                    <td>Create a macro that removes redundant columns from worksheets.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Places button on taskbar.</li>
+                            <li>Clicking the button automatically removes columns.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+    </section>
+
+    <section id="projects_images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <img src="images/RemoveColumns_Macro.gif" alt="Excel Macro: Remove Columns GIF" width="100%">
+    </section>
+
+    <section id="excel-macro-format-worksheet" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Excel Macro: Format Worksheet</td>
+                    <td>Create a macro that applies formatting to worksheets.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Places button on taskbar.</li>
+                            <li>Clicking the button automatically applies formatting to worksheet.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+    </section>
+
+    <section id="projects_images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <img src="images/ResizeTable_Macro.gif" alt="Excel Macro: Format Worksheet GIF" width="100%">
+    </section>
+
+    <section id="autohotkey" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>AutoHotkey</td>
+                    <td>Assign a hotkey to perform repetitive tasks.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Press e.g., "Ctrl + J" to instantly copy-paste highlighted text to a new cell in Excel.</li>
+                            <li>Press e.g., "Ctrl + L" to give highlighted text as input to ChatGPT and return output to the clipboard once ready.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+    </section>
+
+    <section id="projects_images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+        <img src="images/autohotkey.jpg" alt="AutoHotKey Code" width="100%">
+    </section>
+    
     <footer>
         <p><a href="index.html">Back to Homepage</a></p>
         <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
