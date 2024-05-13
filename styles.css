@@ -639,6 +639,17 @@ th {
     padding-left: 10px; /* Adjust the distance between the bullet and the text */
 }
 
+#project-index li {
+    margin-bottom: 10px; /* Add space between list items */
+    margin-top: 10px; /* Add space between list items */
+    padding-left: 10px; /* Adjust the distance between the bullet and the text */
+}
+
+#project-index ol {
+    margin-bottom: 20px; /* Add space between list items */
+    margin-top: 10px; /* Add space between list items */
+    padding-left: 70px; /* Adjust the distance between the bullet and the text */
+}
 
 
 
