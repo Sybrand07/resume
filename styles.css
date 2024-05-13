@@ -626,6 +626,26 @@ th {
     padding-top: 20px;
 }
 
+#projects_images {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+
+/* Specific styling for the bulleted list */
+.bulleted-list-table {
+    list-style-type: disc; /* Use disc bullets */
+    margin-left: 20px; /* Add left margin for indentation */
+    
+}
+
+.bulleted-list-table li {
+    margin-bottom: 10px; /* Add space between list items */
+    margin-top: 10px; /* Add space between list items */
+    padding-left: 10px; /* Adjust the distance between the bullet and the text */
+}
+
 /* Specific styling for the bulleted list */
 .bulleted-list-table {
     list-style-type: disc; /* Use disc bullets */
