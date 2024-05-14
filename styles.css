@@ -342,6 +342,61 @@ body.section-other { /* Applicable to <body class="homepage">. Body style specif
     padding-left: 10px; /* Adjust the distance between the bullet and the text */
 }
 
+.bulleted-list li a {
+    color: rgb(204, 1, 204); /* Add space between list items */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.bulleted-list li a:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+}
+
+#project-index li a {
+    color: rgb(204, 1, 204); /* Add space between list items */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#project-index li a:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+}
+
+.content-section a {
+    color: rgb(204, 1, 204); /* Add space between list items */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.content-section a:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+}
+
+#cv a {
+    color: rgb(204, 1, 204); /* Add space between list items */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#cv a:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+}
+
+.publications table td a {
+    color: rgb(204, 1, 204); /* Add space between list items */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.publications table td a:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+}
+
+a:-webkit-any-link {
+    color: orange; /* Add space between list items */
+    text-decoration: none; /* Remove underline */
+}
+
+a:-webkit-any-link:hover {
+    color: rgb(60, 201, 248); /* Add space between list items */
+    text-decoration: underline; /* Add underline on hover */
+}
+
 #work-experience {
     margin-top: 50px; /* Add space between list items */
     display: grid;
