@@ -775,23 +775,6 @@ th {
     transform-origin: top;
 }
 
-#video {
-    position: relative; /* Set position to relative */
-    overflow: hidden; /* Hide overflowing content */
-    margin-top: 100px; /* Adjust this value to move the image up */
-}
-
-#video::after {
-    content: ""; /* Add content */
-    position: absolute; /* Position absolutely */
-    bottom: 0%; /* Position at the intersection */
-    width: 100%; /* Full width */
-    height: 10px; /* Line height */
-    background-color: orange; /* Line color */
-    z-index: 1; /* Ensure the line appears above the images */
-    transform-origin: top;
-}
-
 /* Image overlay styles */
 .angled-crop-top-positive {
     position: relative; /* Set position to relative */
