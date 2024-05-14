@@ -310,6 +310,27 @@ body.section-other { /* Applicable to <body class="homepage">. Body style specif
 }
 
 /* Specific styling for the bulleted list */
+.bulleted-list-narrow {
+    list-style-type: disc; /* Use disc bullets */
+    margin-left: 70px; /* Add left margin for indentation */
+    
+}
+
+/* Specific styling for the bulleted list */
+.bulleted-list-narrow h4 {
+    color: red;
+    margin-left: -20px; /* Add left margin for indentation */
+    margin-top: 10px; /* Add left margin for indentation */
+    margin-bottom: 5px; /* Add left margin for indentation */
+    
+}
+
+.bulleted-list-narrow li {
+    margin-bottom: 5px; /* Add space between list items */
+    padding-left: 10px; /* Adjust the distance between the bullet and the text */
+}
+
+/* Specific styling for the bulleted list */
 .bulleted-list {
     list-style-type: disc; /* Use disc bullets */
     margin-left: 70px; /* Add left margin for indentation */
@@ -486,10 +507,21 @@ body.section-other { /* Applicable to <body class="homepage">. Body style specif
 
 .skillset:nth-child(4) {
     border-right: 5px solid #ccc;
+    border-bottom: 5px solid #ccc;
 }
 
 .skillset:nth-child(5) {
     border-right: 5px solid #ccc;
+    border-bottom: 5px solid #ccc;
+}
+
+.skillset:nth-child(6) {
+    border-bottom: 5px solid #ccc;
+}
+
+.skillset:nth-child(7) {
+    border-right: 5px solid #ccc;
+    
 }
 
 .orange {
