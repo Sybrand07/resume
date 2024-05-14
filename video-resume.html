@@ -36,15 +36,18 @@
             .catch(error => console.error('Error fetching navbar:', error));
     </script>
     
-    <section id="video">
-        <div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;">
-            <iframe style="transform: translate(-50%, -50%); position: absolute; top: 35%; left: 50%; width: 70%; height: 70%;" src="https://www.youtube.com/embed/PtWrUKQ0Baw" frameborder="0" allowfullscreen></iframe>
+     <section id="video">
+        <div class="video-box">
+            <a href="#" class="thumbnail-link">
+                <img class="video-thumbnail" src="images/youtube-thumbnail.jpg" alt="Video Thumbnail">
+                <iframe class="video-frame" src="https://www.youtube.com/embed/PtWrUKQ0Baw" frameborder="0" allowfullscreen></iframe>
+            </a>
         </div>
     </section>
 
     <!-- Add more sections for additional presentations -->
 
-    <footer>
+    <footer id="video-resume">
         <p><a href="index.html">Back to Homepage</a></p>
         <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
         <!-- Add additional footer content, such as links to privacy policy or terms of use -->
