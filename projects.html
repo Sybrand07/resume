@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </head>
 
-<body class="section-other" id="content">
+<body class="section-other">
     <header class="header"> <!-- Added class "header" -->
         <div class="top-header">
             <div class="slash"></div>
@@ -37,320 +37,322 @@
             .catch(error => console.error('Error fetching navbar:', error));
     </script>
 
-    <section id="Projects" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <div class="angled-crop-top-negative">
-            <img src="images/projects.jpg" alt="Projects Image"> 
-        </div>
-    </section>
-
-    <section id="cv">
-        <h2>The following projects were built to incorporate coding learnings into real-world applications.</h2>
-        <h3>Feel free to explore the functionality!</h3>
-    </section>
-
-    <section id="project-index">
-        <h2>Project Index</h2>
-        <ol>
-            <li><a href="#venahs-travels">Venah's travels</a></li>
-            <li><a href="#liftclub-app">Liftclub App</a></li>
-            <li><a href="#automated-qa-for-chatgpt">Automated Q&A for ChatGPT</a></li>
-            <li><a href="#automated-clinical-study-report">Automated Clinical Study Report</a></li>
-            <li><a href="#excel-macro-remove-columns">Excel Macro: Remove Columns</a></li>
-            <li><a href="#excel-macro-format-worksheet">Excel Macro: Format Worksheet</a></li>
-            <li><a href="#autohotkey">AutoHotkey</a></li>
-        </ol>
-    </section>
-
+    (div id="content")
+        <section id="Projects" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <div class="angled-crop-top-negative">
+                <img src="images/projects.jpg" alt="Projects Image"> 
+            </div>
+        </section>
     
-    <section id="venahs-travels" class="content-section">
-            <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Venah's travels</td>
-                <td>An interactive map displaying places visited by my mother-in-law to date.</td>
-                <td>
-                    <ul class="bulleted-list-table">
-                        <li>Slider bar with arrows for timeline navigation.</li>
-                        <li>Year-specific buttons to jump to desired periods instantly.</li>
-                        <li>Interactive map with zoom functionality.</li>
-                        <li>Marker details on hover.</li>
-                        <li>Most recent visited location displays green for visual reference.</li>
-                    </ul>
-                </td>
-            </tr>
-            </table>
-    </section>
-
-    <section id="webbox" class="content-section">
-        <iframe src="liftclub_project/liftclub/templates/liftclub/visited_locations.html" width="100%" height="600px" frameborder="0"></iframe>
-    </section>
-
-    <section id="liftclub-app" class="content-section">
-            <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Liftclub App</td>
-                <td>Web development</td>
-                <td><a href="https://code.visualstudio.com/download">Download Visual Studio Code</a></td>
-            </tr>
-            </table>
-    </section>
-
-    <section id="webbox" class="content-section">
-        <iframe src="update-in-progress.html" width="100%" height="600px" frameborder="0"></iframe>
-    </section>
-
-    <section id="automated-qa-for-chatgpt" class="content-section">
-            <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Automated Q&A for ChatGPT</td>
-                <td>Automatically serves prompts to ChatGPT from an Excel sheet and pastes ChatGPT's response back to the sheet.</td>
-                <td>
-                    <ul class="bulleted-list-table">
-                        <li>Excel spreadsheet integration for prompts and content.</li>
-                        <li>Automated response retrieval from ChatGPT via unique API.</li>
-                        <li>No length restriction on responses.</li>
-                        <li>AutoHotkey app enables seamless copy-paste from anywhere to the Excel sheet.</li>
-                    </ul>
-                </td>
-            </tr>
-            </table>
-    </section>
+        <section id="cv">
+            <h2>The following projects were built to incorporate coding learnings into real-world applications.</h2>
+            <h3>Feel free to explore the functionality!</h3>
+        </section>
     
-    <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/autochatgpt.jpg" alt="AutoChatGPT Image" width="100%">
-    </section>
-
-    <section id="automated-clinical-study-report" class="content-section">
-            <table>
-                <tr>
-                    <th>Project</th>
-                    <th>Description</th>
-                    <th>Features</th>
-                </tr>
-                <tr>
-                    <td>Automated Clinical Study Report</td>
-                    <td>Generates a comprehensive report of any article.</td>
-                    <td>
-                        <ul class="bulleted-list-table">
-                            <p>Report includes:</p>
-                            <li>200 word structured abstract</li>
-                            <li>Study characteristics</li>
-                            <li>End points and results</li>
-                            <li>Safety parameters </li>
-                            <li>Key take-homes</li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/autoreportclinical.jpg" alt="AutoReport Clinical Image" width="100%">
-    </section>
-
-    <!-- Add more sections for additional resources -->
-
-    <section id="excel-macro-remove-columns" class="content-section">
-            <table>
-                <tr>
-                    <th>Project</th>
-                    <th>Description</th>
-                    <th>Features</th>
-                </tr>
-                <tr>
-                    <td>Excel Macro: Remove Columns</td>
-                    <td>Create a macro that removes redundant columns from worksheets.</td>
-                    <td>
-                        <ul class="bulleted-list-table">
-                            <li>Places button on taskbar.</li>
-                            <li>Clicking the button automatically removes columns.</li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/RemoveColumns_Macro.gif" alt="Excel Macro: Remove Columns GIF" width="70%">
-    </section>
-
-    <section id="excel-macro-format-worksheet" class="content-section">
-            <table>
-                <tr>
-                    <th>Project</th>
-                    <th>Description</th>
-                    <th>Features</th>
-                </tr>
-                <tr>
-                    <td>Excel Macro: Format Worksheet</td>
-                    <td>Create a macro that applies formatting to worksheets.</td>
-                    <td>
-                        <ul class="bulleted-list-table">
-                            <li>Places button on taskbar.</li>
-                            <li>Clicking the button automatically applies formatting to worksheet.</li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/ResizeTable_Macro.gif" alt="Excel Macro: Format Worksheet GIF" width="70%">
-    </section>
-
-    <section id="autohotkey" class="content-section">
-            <table>
-                <tr>
-                    <th>Project</th>
-                    <th>Description</th>
-                    <th>Features</th>
-                </tr>
-                <tr>
-                    <td>AutoHotkey</td>
-                    <td>Assign a hotkey to perform repetitive tasks.</td>
-                    <td>
-                        <ul class="bulleted-list-table">
-                            <li>Press e.g., "Ctrl + J" to instantly copy-paste highlighted text to a new cell in Excel.</li>
-                            <li>Press e.g., "Ctrl + L" to give highlighted text as input to ChatGPT and return output to the clipboard once ready.</li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
-        <img src="images/autohotkey.jpg" alt="AutoHotKey Code" width="70%">
-    </section>
-
-    <section id="dashboards">
-        <h2>DISCLAIMER: The following illustrations were not created by me. However, I have produced similar PowerPoints for the companies I have worked with.</h2>
-        <h3>This is to show what is possible!</h3>
-    </section>
-
-    <section id="project-index">
-        <h2>Project Index</h2>
-        <ol>
-            <li><a href="#powerpoint-illustrations">Data Visualization</a></li>
-            <li><a href="#process-flow">Process Flow</a></li>
-            <li><a href="#world-maps">Interactive World Maps</a></li>
-        </ol>
-    </section>
-
-    <section id="powerpoint-illustrations" class="content-section">
-        <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Data Visualization</td>
-                <td>Create visually compelling slide decks to illustrate key insights from reports.</td>
-                <td>
-                    <ul class="bulleted-list-table">
-                        <li>Key insights illustrated visually using charts, graphs, and infographics.</li>
-                        <li>Supports real-time data updates.</li>
-                        <li>Customizable templates for consistent styling and branding.</li>
-                        <li>Integration with data sources like Excel, SQL databases, and real-time APIs.</li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> 
-        <div class="repeat" controls>
-            <video id="fbVideo" autoplay loop muted>
-                <source src="images/powerpoint-presentations.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
-
-    <section id="process-flow" class="content-section">
-        <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Process Flow Reports</td>
-                <td>Develop slide decks that illustrate process flow and key insights from reports.</td>
-                <td>
-                    <ul class="bulleted-list-table">
-                        <li>Visual representations of process flows using flowcharts, diagrams, and other visual tools.</li>
-                        <li>Key insights highlighted visually.</li>
-                        <li>Supports real-time data updates.</li>
-                        <li>Customizable templates for consistent and professional presentations.</li>
-                        <li>Integration with various data sources for automated updates.</li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> 
-        <div class="repeat" controls>
-            <video id="fbVideo" autoplay loop muted>
-                <source src="images/process-illustration.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
-
-    <section id="world-maps" class="content-section">
-        <table>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Features</th>
-            </tr>
-            <tr>
-                <td>Interactive World Maps</td>
-                <td>Interactive Excel dashboard using pivot charts to illustrate data on a world map.</td>
-                <td>
-                    <ul class="bulleted-list-table">
-                        <li>Key insights illustrated visually on an interactive world map.</li>
-                        <li>Supports real-time data updates.</li>
-                        <li>Interactive features such as zoom, pan, and clickable regions.</li>
-                        <li>Integration with various data sources, including geospatial data.</li>
-                        <li>Customizable map layers and themes.</li>
-                        <li>Analytical tools and filters for deeper insights.</li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <section id="projects-images" class="content-section"> 
-        <div class="repeat" controls>
-            <video id="fbVideo" autoplay loop muted>
-                <source src="images/world-map-illustrations.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
+        <section id="project-index">
+            <h2>Project Index</h2>
+            <ol>
+                <li><a href="#venahs-travels">Venah's travels</a></li>
+                <li><a href="#liftclub-app">Liftclub App</a></li>
+                <li><a href="#automated-qa-for-chatgpt">Automated Q&A for ChatGPT</a></li>
+                <li><a href="#automated-clinical-study-report">Automated Clinical Study Report</a></li>
+                <li><a href="#excel-macro-remove-columns">Excel Macro: Remove Columns</a></li>
+                <li><a href="#excel-macro-format-worksheet">Excel Macro: Format Worksheet</a></li>
+                <li><a href="#autohotkey">AutoHotkey</a></li>
+            </ol>
+        </section>
     
-    <footer>
-        <p><a href="index.html">Back to Homepage</a></p>
-        <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
-        <!-- Add additional footer content, such as links to privacy policy or terms of use -->
-    </footer>
+        
+        <section id="venahs-travels" class="content-section">
+                <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Venah's travels</td>
+                    <td>An interactive map displaying places visited by my mother-in-law to date.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Slider bar with arrows for timeline navigation.</li>
+                            <li>Year-specific buttons to jump to desired periods instantly.</li>
+                            <li>Interactive map with zoom functionality.</li>
+                            <li>Marker details on hover.</li>
+                            <li>Most recent visited location displays green for visual reference.</li>
+                        </ul>
+                    </td>
+                </tr>
+                </table>
+        </section>
+    
+        <section id="webbox" class="content-section">
+            <iframe src="liftclub_project/liftclub/templates/liftclub/visited_locations.html" width="100%" height="600px" frameborder="0"></iframe>
+        </section>
+    
+        <section id="liftclub-app" class="content-section">
+                <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Liftclub App</td>
+                    <td>Web development</td>
+                    <td><a href="https://code.visualstudio.com/download">Download Visual Studio Code</a></td>
+                </tr>
+                </table>
+        </section>
+    
+        <section id="webbox" class="content-section">
+            <iframe src="update-in-progress.html" width="100%" height="600px" frameborder="0"></iframe>
+        </section>
+    
+        <section id="automated-qa-for-chatgpt" class="content-section">
+                <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Automated Q&A for ChatGPT</td>
+                    <td>Automatically serves prompts to ChatGPT from an Excel sheet and pastes ChatGPT's response back to the sheet.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Excel spreadsheet integration for prompts and content.</li>
+                            <li>Automated response retrieval from ChatGPT via unique API.</li>
+                            <li>No length restriction on responses.</li>
+                            <li>AutoHotkey app enables seamless copy-paste from anywhere to the Excel sheet.</li>
+                        </ul>
+                    </td>
+                </tr>
+                </table>
+        </section>
+        
+        <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <img src="images/autochatgpt.jpg" alt="AutoChatGPT Image" width="100%">
+        </section>
+    
+        <section id="automated-clinical-study-report" class="content-section">
+                <table>
+                    <tr>
+                        <th>Project</th>
+                        <th>Description</th>
+                        <th>Features</th>
+                    </tr>
+                    <tr>
+                        <td>Automated Clinical Study Report</td>
+                        <td>Generates a comprehensive report of any article.</td>
+                        <td>
+                            <ul class="bulleted-list-table">
+                                <p>Report includes:</p>
+                                <li>200 word structured abstract</li>
+                                <li>Study characteristics</li>
+                                <li>End points and results</li>
+                                <li>Safety parameters </li>
+                                <li>Key take-homes</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <img src="images/autoreportclinical.jpg" alt="AutoReport Clinical Image" width="100%">
+        </section>
+    
+        <!-- Add more sections for additional resources -->
+    
+        <section id="excel-macro-remove-columns" class="content-section">
+                <table>
+                    <tr>
+                        <th>Project</th>
+                        <th>Description</th>
+                        <th>Features</th>
+                    </tr>
+                    <tr>
+                        <td>Excel Macro: Remove Columns</td>
+                        <td>Create a macro that removes redundant columns from worksheets.</td>
+                        <td>
+                            <ul class="bulleted-list-table">
+                                <li>Places button on taskbar.</li>
+                                <li>Clicking the button automatically removes columns.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <img src="images/RemoveColumns_Macro.gif" alt="Excel Macro: Remove Columns GIF" width="70%">
+        </section>
+    
+        <section id="excel-macro-format-worksheet" class="content-section">
+                <table>
+                    <tr>
+                        <th>Project</th>
+                        <th>Description</th>
+                        <th>Features</th>
+                    </tr>
+                    <tr>
+                        <td>Excel Macro: Format Worksheet</td>
+                        <td>Create a macro that applies formatting to worksheets.</td>
+                        <td>
+                            <ul class="bulleted-list-table">
+                                <li>Places button on taskbar.</li>
+                                <li>Clicking the button automatically applies formatting to worksheet.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <img src="images/ResizeTable_Macro.gif" alt="Excel Macro: Format Worksheet GIF" width="70%">
+        </section>
+    
+        <section id="autohotkey" class="content-section">
+                <table>
+                    <tr>
+                        <th>Project</th>
+                        <th>Description</th>
+                        <th>Features</th>
+                    </tr>
+                    <tr>
+                        <td>AutoHotkey</td>
+                        <td>Assign a hotkey to perform repetitive tasks.</td>
+                        <td>
+                            <ul class="bulleted-list-table">
+                                <li>Press e.g., "Ctrl + J" to instantly copy-paste highlighted text to a new cell in Excel.</li>
+                                <li>Press e.g., "Ctrl + L" to give highlighted text as input to ChatGPT and return output to the clipboard once ready.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> <!-- The id attribute uniquely identifies the section with the value "about-me". It can be used to target this section specifically with CSS or JavaScript. -->
+            <img src="images/autohotkey.jpg" alt="AutoHotKey Code" width="70%">
+        </section>
+    
+        <section id="dashboards">
+            <h2>DISCLAIMER: The following illustrations were not created by me. However, I have produced similar PowerPoints for the companies I have worked with.</h2>
+            <h3>This is to show what is possible!</h3>
+        </section>
+    
+        <section id="project-index">
+            <h2>Project Index</h2>
+            <ol>
+                <li><a href="#powerpoint-illustrations">Data Visualization</a></li>
+                <li><a href="#process-flow">Process Flow</a></li>
+                <li><a href="#world-maps">Interactive World Maps</a></li>
+            </ol>
+        </section>
+    
+        <section id="powerpoint-illustrations" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Data Visualization</td>
+                    <td>Create visually compelling slide decks to illustrate key insights from reports.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Key insights illustrated visually using charts, graphs, and infographics.</li>
+                            <li>Supports real-time data updates.</li>
+                            <li>Customizable templates for consistent styling and branding.</li>
+                            <li>Integration with data sources like Excel, SQL databases, and real-time APIs.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> 
+            <div class="repeat" controls>
+                <video id="fbVideo" autoplay loop muted>
+                    <source src="images/powerpoint-presentations.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+    
+        <section id="process-flow" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Process Flow Reports</td>
+                    <td>Develop slide decks that illustrate process flow and key insights from reports.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Visual representations of process flows using flowcharts, diagrams, and other visual tools.</li>
+                            <li>Key insights highlighted visually.</li>
+                            <li>Supports real-time data updates.</li>
+                            <li>Customizable templates for consistent and professional presentations.</li>
+                            <li>Integration with various data sources for automated updates.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> 
+            <div class="repeat" controls>
+                <video id="fbVideo" autoplay loop muted>
+                    <source src="images/process-illustration.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+    
+        <section id="world-maps" class="content-section">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                </tr>
+                <tr>
+                    <td>Interactive World Maps</td>
+                    <td>Interactive Excel dashboard using pivot charts to illustrate data on a world map.</td>
+                    <td>
+                        <ul class="bulleted-list-table">
+                            <li>Key insights illustrated visually on an interactive world map.</li>
+                            <li>Supports real-time data updates.</li>
+                            <li>Interactive features such as zoom, pan, and clickable regions.</li>
+                            <li>Integration with various data sources, including geospatial data.</li>
+                            <li>Customizable map layers and themes.</li>
+                            <li>Analytical tools and filters for deeper insights.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    
+        <section id="projects-images" class="content-section"> 
+            <div class="repeat" controls>
+                <video id="fbVideo" autoplay loop muted>
+                    <source src="images/world-map-illustrations.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+        
+        <footer>
+            <p><a href="index.html">Back to Homepage</a></p>
+            <p>&copy; 2024 Sybrand Engelbrecht Smit. All rights reserved.</p>
+            <!-- Add additional footer content, such as links to privacy policy or terms of use -->
+        </footer>
+    </div>
 
     <div id="minimap-wrapper">
         <div id="minimap-content">
@@ -362,6 +364,17 @@
 
     <script src="html2canvas.min.js" defer></script> <!-- Ensure the script is deferred -->
     <script>
+        // Modify getContext calls to include willReadFrequently attribute
+        (function() {
+            var originalGetContext = HTMLCanvasElement.prototype.getContext;
+            HTMLCanvasElement.prototype.getContext = function(contextType, contextAttributes) {
+                if (contextType === '2d' && !contextAttributes) {
+                    contextAttributes = { willReadFrequently: true };
+                }
+                return originalGetContext.call(this, contextType, contextAttributes);
+            };
+        })();
+    
         // Capture the screenshot and set the minimap image when the page is loaded
         window.addEventListener('load', function() {
             html2canvas(document.body, {
@@ -372,18 +385,18 @@
                 onrendered: function(canvas) {
                     // Convert canvas to data URL
                     var imageDataUrl = canvas.toDataURL();
-
+    
                     // Set the data URL as the source of the minimap image
                     var minimapImg = document.getElementById('minimap-image');
                     minimapImg.src = imageDataUrl;
-
+    
                     // Optionally, you can adjust the size of the minimap image to fit the wrapper
                     // minimapImg.style.width = '100%';
                     // minimapImg.style.height = '100%';
                 }
             });
         });
-
+    
         // Update the position of the overlay when the page is scrolled
         window.addEventListener('scroll', function() {
             var minimapOverlay = document.getElementById('minimap-overlay');
