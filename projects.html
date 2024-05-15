@@ -352,11 +352,52 @@
     </footer>
 
     <div id="minimap-wrapper">
-        <div id="minimap-content"></div>
-        <div id="minimap-overlay"></div>
+        <div id="minimap-content">
+            <!-- Minimap image placeholder -->
+            <img id="minimap-image" src="" alt="Minimap Screenshot">
+            <div id="minimap-overlay"></div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="html2canvas.min.js" defer></script> <!-- Ensure the script is deferred -->
+    <script>
+        // Capture the screenshot and set the minimap image when the page is loaded
+        window.addEventListener('load', function() {
+            html2canvas(document.body, {
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: document.documentElement.scrollWidth,
+                windowHeight: document.documentElement.scrollHeight,
+                onrendered: function(canvas) {
+                    // Convert canvas to data URL
+                    var imageDataUrl = canvas.toDataURL();
+
+                    // Set the data URL as the source of the minimap image
+                    var minimapImg = document.getElementById('minimap-image');
+                    minimapImg.src = imageDataUrl;
+
+                    // Optionally, you can adjust the size of the minimap image to fit the wrapper
+                    // minimapImg.style.width = '100%';
+                    // minimapImg.style.height = '100%';
+                }
+            });
+        });
+
+        // Update the position of the overlay when the page is scrolled
+        window.addEventListener('scroll', function() {
+            var minimapOverlay = document.getElementById('minimap-overlay');
+            var minimapImg = document.getElementById('minimap-image');
+            
+            // Calculate the scroll percentage
+            var scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            
+            // Calculate the top position of the overlay relative to the image
+            var overlayTop = scrollPercentage * (minimapImg.offsetHeight - minimapOverlay.offsetHeight);
+            
+            // Update the position of the overlay
+            minimapOverlay.style.top = overlayTop + 'px';
+        });
+    </script>
 </body>
 
 </html>
