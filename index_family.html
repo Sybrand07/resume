@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Circular Org Chart with D3.js</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ui-panel">
+      <select id="filterRole">
+        <option value="">All Roles</option>
+      </select>
+      <select id="filterDepartment">
+        <option value="">All Departments</option>
+      </select>
+      <div id="legend" class="legend"></div>
+  </div>
+
+  <!-- Spacer to push content below the fixed panel -->
+  <div class="layout-container" style="display: flex; height: 100vh;">
+    <!-- Slider Panel on the Left -->
+    <div class="slider-panel" style="margin-top: 40px; min-width: 250px; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background-color: #f5f5f5; border-right: 1px solid #ccc;">
+      <div>
+        <label for="ringSlider">Ring Spacing:</label><br>
+        <input id="ringSlider" type="range" min="100" max="800" value="400">
+        <span id="ringSliderValue">220</span>
+      </div>
+      <div>
+        <label for="circleSlider">Circle Radius:</label><br>
+        <input id="circleSlider" type="range" min="20" max="120" value="38">
+        <span id="circleSliderValue">38</span>
+      </div>
+      <div>
+        <label for="boxWidthSlider">Info Box Width:</label><br>
+        <input id="boxWidthSlider" type="range" min="60" max="400" value="80">
+        <span id="boxWidthSliderValue">80</span>
+      </div>
+      <div>
+        <label for="boxHeightSlider">Info Box Height:</label><br>
+        <input id="boxHeightSlider" type="range" min="20" max="60" value="30">
+        <span id="boxHeightSliderValue">30</span>
+      </div>
+      <div>
+        <label for="strokeWidthSlider">Line Stroke Width:</label><br>
+        <input id="strokeWidthSlider" type="range" min="1" max="100" value="15">
+        <span id="strokeWidthSliderValue">15</span>
+      </div>
+      <div>
+        <label for="textSizeSlider">Text Size (px):</label><br>
+        <input id="textSizeSlider" type="range" min="10" max="40" value="14">
+        <span id="textSizeSliderValue">14</span>
+      </div>
+      <div>
+        <label for="angleSlider">Angle (°):</label><br>
+        <input id="angleSlider" type="range" min="45" max="720" value="360" step="15">
+        <span id="angleSliderValue">360</span>
+      </div>
+      <div>
+        <label for="spouseAngleSlider">Spouse Angle:</label><br>
+        <input type="range" id="spouseAngleSlider" min="0" max="0.25" step="0.01" value="0.1">
+        <span id="spouseAngleValue">0.1</span>
+      </div>
+      <div>
+        <label for="separationSlider">Node Separation:</label><br>
+        <input id="separationSlider" type="range" min="0.1" max="10" value="3" step="0.1">
+        <span id="separationSliderValue">3</span>
+      </div>
+      <div>
+        <label for="rotationSlider">Rotation (°):</label><br>
+        <input id="rotationSlider" type="range" min="0" max="360" step="15" value="90">
+        <span id="rotationSliderValue">90</span>
+      </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <svg>
+    <defs>
+      <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00bfff" flood-opacity="0.4"/>
+      </filter>
+    </defs>
+  </svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+
+const svg = d3.select("svg");
+const g = svg.append("g");
+
+// Define the zoom behavior
+const zoom = d3.zoom().on("zoom", (event) => {
+  g.attr("transform", event.transform);
+});
+
+// Apply the zoom behavior to the SVG
+svg.call(zoom);
+
+// Set initial zoom level (this will only apply when the page first loads)
+const initialScale = 0.3; // Adjust the zoom level as needed
+const svgWidth = svg.node().clientWidth;
+const svgHeight = svg.node().clientHeight;
+
+// Set the initial zoom transform to center and scale the SVG
+const initialZoomTransform = d3.zoomIdentity
+  .translate(svgWidth / 2, svgHeight / 2)  // Center the chart
+  .scale(initialScale);  // Set the initial scale (zoom level)
+
+svg.call(zoom.transform, initialZoomTransform); // Apply initial zoom transform to the SVG
+
+function radialPoint(x, y) {
+  const rotationRadians = (+rotationSlider.value * Math.PI) / 180;
+  return [y * Math.cos(x - rotationRadians), y * Math.sin(x - rotationRadians)];
+}
+
+function getMaxDepth(node, depth = 0) {
+  if (!node.children || node.children.length === 0) return depth;
+  return Math.max(...node.children.map(child => getMaxDepth(child, depth + 1)));
+}
+
+function assignColorBySubtree(root) {
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+  let colorMap = new Map();
+  let colorIndex = 0;
+
+  if (!root.children) return () => "#999"; // fallback color if no children
+
+  root.children.forEach((child) => {
+    const color = colorScale(colorIndex++);
+    child.each((node) => {
+      colorMap.set(node, color);
+    });
+  });
+
+  return (node) => colorMap.get(node) || "#999";
+}
+
+function renderChart(data, showSpouseLines = false) {
+  g.selectAll("*").remove(); // Clear any existing content
+
+  const root = d3.hierarchy(data, d => d.children || []);
+  const colors = assignColorBySubtree(root);
+  const ringSpacing = +ringSlider.value;
+  const circleRadius = +circleSlider.value;
+  const boxWidth = +boxWidthSlider.value;
+  const boxHeight = +boxHeightSlider.value;
+  const strokeWidth = +strokeWidthSlider.value;
+  const textSize = +textSizeSlider.value;
+  const angle = (+angleSlider.value / 360) * 2 * Math.PI;
+  const separation = +separationSlider.value;
+  const spouseAngle = +spouseAngleSlider.value || 0.1; // in radians
+
+  const defaultDepth = data._calculatedDepth || getMaxDepth(data);
+
+  const tree = d3.tree()
+    .size([angle, defaultDepth * ringSpacing])
+    .separation((a, b) => {
+      const base = +separationSlider.value;
+      const aSize = a.descendants().length;
+      const bSize = b.descendants().length;
+      return a.parent === b.parent
+        ? base * (1 + Math.abs(aSize - bSize) / 10)  // reduce influence of big subtrees
+        : base + 10;
+    });
+
+  tree(root);
+  applySpouseAngleAdjustment(root, spouseAngle);
+
+  // Tree links (excluding fake child links)
+  const links = g.selectAll(".link")
+    .data(root.links().filter(d => !d.target.data.isFakeChild))
+    .enter();
+
+  links.append("path")
+    .attr("class", "link-shadow")
+    .attr("d", d => {
+      const [sx, sy] = radialPoint(d.source.x, d.source.y);
+      const [tx, ty] = radialPoint(d.target.x, d.target.y);
+      return `M${sx},${sy}C${sx},${(sy + ty) / 2} ${tx},${(sy + ty) / 2} ${tx},${ty}`;
+    })
+    .attr("fill", "none")
+    .attr("stroke", d => colors(d.target) || "#ccc")
+    .attr("stroke-width", strokeWidth)
+    .attr("stroke-opacity", 0.15);
+
+  links.append("path")
+    .attr("class", "link")
+    .attr("d", d => {
+      const [sx, sy] = radialPoint(d.source.x, d.source.y);
+      const [tx, ty] = radialPoint(d.target.x, d.target.y);
+      return `M${sx},${sy}C${sx},${(sy + ty) / 2} ${tx},${(sy + ty) / 2} ${tx},${ty}`;
+    })
+    .attr("fill", "none")
+    .attr("stroke", d => colors(d.target) || "#ccc")
+    .attr("stroke-width", 3)
+    .attr("stroke-opacity", 1);
+
+  // Nodes
+  const node = g.selectAll(".node")
+    .data(root.descendants())
+    .enter().append("g")
+    .attr("class", d => `node depth-${d.depth}`)
+    .attr("transform", d => {
+      const [x, y] = radialPoint(d.x, d.y);
+      return `translate(${x},${y})`;
+    });
+
+  node.append("title")
+    .text(d => d.data.spouse ? `${d.data.name} (spouse: ${d.data.spouse})` : d.data.name);
+
+  // Spouse Links - Draw after nodes
+  if (showSpouseLines && data.children) {
+    const allSpouseLinks = data.spouseLinks || []; // Ensure it's an array
+
+    data.children.forEach(dept => {
+      if (dept.spouseLinks && dept.spouseLinks.length > 0) {
+        allSpouseLinks.push(...dept.spouseLinks);
+      }
+    });
+
+    // Map names to radial positions
+    const nodeByName = {};
+    root.descendants().forEach(d => {
+      const [x, y] = radialPoint(d.x, d.y);
+      nodeByName[d.data.name] = { x, y };
+    });
+
+    g.selectAll(".spouse-link").data(allSpouseLinks)
+      .enter()
+      .append("line")
+      .attr("class", "spouse-link")
+      .attr("x1", d => {
+        const source = nodeByName[d.source];
+        const target = nodeByName[d.target];
+        if (!source || !target) return 0;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const offsetX = (dx / dist) * circleRadius;
+        return source.x + offsetX;
+      })
+      .attr("y1", d => {
+        const source = nodeByName[d.source];
+        const target = nodeByName[d.target];
+        if (!source || !target) return 0;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const offsetY = (dy / dist) * circleRadius;
+        return source.y + offsetY;
+      })
+      .attr("x2", d => {
+        const source = nodeByName[d.source];
+        const target = nodeByName[d.target];
+        if (!source || !target) return 0;
+        const dx = source.x - target.x;
+        const dy = source.y - target.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const offsetX = (dx / dist) * circleRadius;
+        return target.x + offsetX;
+      })
+      .attr("y2", d => {
+        const source = nodeByName[d.source];
+        const target = nodeByName[d.target];
+        if (!source || !target) return 0;
+        const dx = source.x - target.x;
+        const dy = source.y - target.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const offsetY = (dy / dist) * circleRadius;
+        return target.y + offsetY;
+      })
+      .attr("stroke", "red")
+      .attr("stroke-dasharray", "4 4")
+      .attr("stroke-width", 2);
+  }
+
+
+
+  node.append("circle")
+    .attr("class", "photo-border")
+    .attr("r", 0)
+    .attr("stroke", d => colors(d) || "#ccc")
+    .attr("fill", "white") 
+    .transition()
+    .duration(600)
+    .attr("r", circleRadius);
+
+  node.append("clipPath")
+    .attr("id", (d, i) => "clip-" + i)
+    .append("circle")
+    .attr("r", circleRadius)
+    .attr("cx", 0)
+    .attr("cy", 0);
+
+  node.append("image")
+    .attr("xlink:href", d => d.data.image || '')
+    .attr("width", circleRadius * 2)
+    .attr("height", circleRadius * 2)
+    .attr("x", -circleRadius)
+    .attr("y", -circleRadius)
+    .attr("clip-path", (d, i) => `url(#clip-${i})`);
+
+  // Precompute node positions in cartesian for collision checks
+  const allNodes = root.descendants().map(d => {
+    const [x, y] = radialPoint(d.x, d.y);
+    return { ...d, x, y };
+  });
+
+  const infoGroup = node.append("g")
+    .attr("class", "info-group")
+    .each(function(d) {
+      const offset = getSafeLabelOffset(d, allNodes, circleRadius, boxWidth, boxHeight);
+      d.infoBoxOffset = offset; // 👈 store offset for later reuse
+      d3.select(this).attr("transform", `translate(${offset.dx}, ${offset.dy})`);
+    });
+
+
+  infoGroup.append("rect")
+    .attr("class", "info-box-bg")
+    .attr("x", -boxWidth / 2)
+    .attr("y", -boxHeight / 2)
+    .attr("width", boxWidth)
+    .attr("height", boxHeight)
+    .attr("rx", 6);
+
+  infoGroup.append("text")
+    .attr("class", "name-text")
+    .attr("text-anchor", "middle")
+    .attr("dy", "0.35em")
+    .style("font-size", textSize + "px")
+    .text(d => d.data.name);
+
+  function getSafeLabelOffset(d, allNodes, radius, boxW, boxH, maxTries = 16) {
+    const self = allNodes.find(n => n.data === d.data);
+    const startAngle = Math.PI / 2; // Start from 6 o'clock
+    const angleStep = (2 * Math.PI) / maxTries;
+
+    for (let i = 0; i < maxTries; i++) {
+      const angle = startAngle + i * angleStep;
+
+      // Dynamic offset to ensure box edge is outside the circle
+      const dx = Math.cos(angle) * (radius + boxW / 2 + 8);
+      const dy = Math.sin(angle) * (radius + boxH / 2 + 8);
+
+      const boxX = self.x + dx;
+      const boxY = self.y + dy;
+
+      const collision = allNodes.some(other => {
+        if (other === self) return false;
+        const dist = Math.sqrt((boxX - other.x) ** 2 + (boxY - other.y) ** 2);
+        return dist < radius * 2;
+      });
+
+      if (!collision) return { dx, dy, angle };
+    }
+
+    // Fallback to default 6 o’clock position
+    const fallbackDx = Math.cos(startAngle) * (radius + boxW / 2 + 8);
+    const fallbackDy = Math.sin(startAngle) * (radius + boxH / 2 + 8);
+    return { dx: fallbackDx, dy: fallbackDy, angle: startAngle };
+  }
+
+  node.append("text")
+    .attr("class", "name-text")
+    .attr("x", d => d.infoBoxOffset.dx)
+    .attr("y", d => d.infoBoxOffset.dy + textSize / 3) // vertically center in box
+    .attr("text-anchor", "middle")
+    .style("font-size", textSize + "px")
+    .text(d => d.data.name);
+
+  node.selectAll("circle")
+    .transition()
+    .duration(600)
+    .ease(d3.easeCubicOut)
+    .attr("r", circleRadius);
+
+  node.selectAll("image")
+    .style("opacity", 0)
+    .transition()
+    .delay(500)
+    .style("opacity", 1);
+
+  node.on("click", (event, d) => {
+      document.getElementById("modalBody").innerHTML = `
+        <h3>${d.data.name}</h3>
+        <p><strong>Role:</strong> ${d.data.role || "N/A"}</p>
+        <p><strong>Department:</strong> ${d.data.department || "N/A"}</p>
+        <img src="${d.data.image}" alt="Photo of ${d.data.name}" style="width:80px;border-radius:50%;">
+      `;
+      document.getElementById("modal").style.display = "block";
+    
+  });
+
+  document.getElementById("modalClose").onclick = () => {
+    document.getElementById("modal").style.display = "none";
+  };
+
+  const svgWidth = svg.node().clientWidth;
+  const svgHeight = svg.node().clientHeight;
+
+}
+
+const ringSlider = document.getElementById("ringSlider");
+const circleSlider = document.getElementById("circleSlider");
+const boxWidthSlider = document.getElementById("boxWidthSlider");
+const boxHeightSlider = document.getElementById("boxHeightSlider");
+const strokeWidthSlider = document.getElementById("strokeWidthSlider");
+const textSizeSlider = document.getElementById("textSizeSlider");
+const angleSlider = document.getElementById("angleSlider");
+const separationSlider = document.getElementById("separationSlider");
+const spouseAngleSlider = document.getElementById("spouseAngleSlider");
+const rotationSlider = document.getElementById("rotationSlider");
+
+let currentData = null; // store last fetched data for re-rendering
+let currentColorScale = null;
+
+updateSliderLabels();
+
+function updateSliderLabels() {
+  document.getElementById("ringSliderValue").textContent = ringSlider.value;
+  document.getElementById("circleSliderValue").textContent = circleSlider.value;
+  document.getElementById("boxWidthSliderValue").textContent = boxWidthSlider.value;
+  document.getElementById("boxHeightSliderValue").textContent = boxHeightSlider.value;
+  document.getElementById("strokeWidthSliderValue").textContent = strokeWidthSlider.value;
+  document.getElementById("textSizeSliderValue").textContent = textSizeSlider.value;
+  document.getElementById("angleSliderValue").textContent = angleSlider.value;
+  document.getElementById("separationSliderValue").textContent = separationSlider.value;
+  document.getElementById("spouseAngleValue").textContent = spouseAngleSlider.value;
+  document.getElementById("rotationSliderValue").textContent = rotationSlider.value;
+}
+
+function updateChartFromSliders() {
+  if (!currentData) return;
+  updateSliderLabels();
+  
+  const { root, g, colors } = renderChart(currentData, true); // 'true' to showSpouseLines
+  drawSpouseLinks(root, g, colors);
+}
+
+// Add listeners
+[
+  ringSlider, circleSlider, boxWidthSlider, boxHeightSlider,
+  strokeWidthSlider, textSizeSlider, angleSlider, separationSlider, spouseAngleSlider, rotationSlider
+].forEach(slider => {
+  slider.addEventListener("input", updateChartFromSliders);
+});
+
+function applySpouseAngleAdjustment(root, spouseAngle) {
+  const nodeByName = new Map();
+  root.descendants().forEach(d => nodeByName.set(d.data.name, d));
+
+  // Collect adjusted names to avoid double shifting
+  const adjusted = new Set();
+
+  root.descendants().forEach(d => {
+    if (d.data.spouse && !adjusted.has(d.data.name)) {
+      const spouseNode = nodeByName.get(d.data.spouse);
+      if (spouseNode) {
+        const avgAngle = (d.x + spouseNode.x) / 2;
+        d.x = avgAngle - spouseAngle / 2;
+        spouseNode.x = avgAngle + spouseAngle / 2;
+
+        adjusted.add(d.data.name);
+        adjusted.add(spouseNode.data.name);
+      }
+    }
+  });
+}
+
+fetch("family_structure.xlsx")
+  .then(res => res.arrayBuffer())
+  .then(arrayBuffer => {
+    const workbook = XLSX.read(arrayBuffer, { type: "array" });
+    const departmentsSet = new Set();
+
+    const departments = workbook.SheetNames.map((name) => {
+      const sheet = workbook.Sheets[name];
+      const rows = XLSX.utils.sheet_to_json(sheet);
+      const map = {};
+      const spouseLinks = [];
+
+      // Map people and build base structure
+      rows.forEach(row => {
+        departmentsSet.add(name);
+        map[row.name] = {
+          name: row.name,
+          image: row.image,
+          role: row.role,
+          department: name,
+          spouse: row.spouse || null,
+          parent: row.parent,
+          children: [],
+          isSpouse: false,
+          isFakeChild: false // NEW: mark if the node is just placed here for layout
+        };
+      });
+
+      let roots = [];
+
+      // Assign children to their parent
+      rows.forEach(row => {
+        const person = map[row.name];
+
+        // If this person has a parent, assign them as a child
+        if (row.parent && map[row.parent]) {
+          const parent = map[row.parent];
+          parent.children.push(person);
+
+          // If the person is a spouse, this parent-child is FAKE
+          if (person.spouse) {
+            person.isFakeChild = true;
+          }
+        } else {
+          // ⚠️ Check if this is a spouse of a root-level node
+          const isSpouseOfARoot = row.spouse && rows.find(r => r.name === row.spouse && (!r.parent || !map[r.parent]));
+          if (isSpouseOfARoot) {
+            person.isFakeChild = true; // no true parent
+            roots.push(person); // Put alongside the real root person
+          } else {
+            roots.push(person); // Normal root
+          }
+        }
+      });
+
+      // Mark spouse nodes and collect spouse link info
+      rows.forEach(row => {
+        if (row.spouse && map[row.spouse]) {
+          const person = map[row.name];
+          const partner = map[row.spouse];
+          person.isSpouse = true;
+          spouseLinks.push({ source: person.name, target: partner.name });
+        }
+      });
+
+      return {
+        name: name,
+        children: roots,
+        spouseLinks: spouseLinks
+      };
+    });
+
+    const allDepartments = Array.from(departmentsSet);
+    const colorScale = d3.scaleOrdinal()
+      .domain(allDepartments)
+      .range(d3.schemeTableau10);
+
+    currentColorScale = d => colorScale(d);
+
+    const data = {
+      name: "Company",
+      children: departments,
+    };
+
+    renderChart(data, currentColorScale, true); // Pass flag to renderChart to handle dashed lines
+    setupFilters(data, currentColorScale);
+    currentData = data;
+  });
+
+
+function setupFilters(data, initialColorScale) {
+  const roleSet = new Set();
+  const departmentSet = new Set();
+
+  function collectMeta(node) {
+    if (node.role) roleSet.add(node.role);
+    if (node.department) departmentSet.add(node.department);
+    if (node.children) node.children.forEach(collectMeta);
+  }
+
+  data.children.forEach(dept => collectMeta(dept));
+
+  const roleSelect = document.getElementById("filterRole");
+  const deptSelect = document.getElementById("filterDepartment");
+  const legend = document.getElementById("legend");
+
+  // Add 'All' option first
+  const allRolesOpt = document.createElement("option");
+  allRolesOpt.value = "";
+  allRolesOpt.textContent = "All Roles";
+  roleSelect.appendChild(allRolesOpt);
+
+  const allDeptsOpt = document.createElement("option");
+  allDeptsOpt.value = "";
+  allDeptsOpt.textContent = "All Departments";
+  deptSelect.appendChild(allDeptsOpt);
+
+  const allSpouseLinks = [];
+
+  data.children.forEach(dept => {
+    if (dept.spouseLinks) {
+      allSpouseLinks.push(...dept.spouseLinks);
+    }
+  });
+
+  // Populate filters
+  roleSet.forEach(role => {
+    const opt = document.createElement("option");
+    opt.value = role;
+    opt.textContent = role;
+    roleSelect.appendChild(opt);
+  });
+
+  departmentSet.forEach(dept => {
+    const opt = document.createElement("option");
+    opt.value = dept;
+    opt.textContent = dept;
+    deptSelect.appendChild(opt);
+  });
+
+  // Populate legend with initial colors
+  legend.innerHTML = ""; // Clear any existing
+  [...departmentSet].forEach(dept => {
+    const div = document.createElement("div");
+    div.className = "legend-item";
+    div.innerHTML = `<span class="legend-color" style="background-color: ${initialColorScale(dept)};"></span> ${dept}`;
+    legend.appendChild(div);
+  });
+
+  function filterNode(node, role, dept) {
+    let match = true;
+    if (role && node.role !== role) match = false;
+    if (dept && node.department !== dept) match = false;
+
+    let children = [];
+    if (node.children) {
+      children = node.children.map(child => filterNode(child, role, dept)).filter(Boolean);
+      if (children.length > 0) match = true;
+    }
+
+    return match ? { ...node, children } : null;
+  }
+
+  function generateColorScaleFromTree(treeData) {
+    const deptSet = new Set();
+
+    function walk(node) {
+      if (node.department) deptSet.add(node.department);
+      if (node.children) node.children.forEach(walk);
+    }
+
+    treeData.children?.forEach(walk);
+
+    return d3.scaleOrdinal()
+      .domain(Array.from(deptSet))
+      .range(d3.schemeCategory10);
+  }
+
+  function applyFilters() {
+    const selectedRole = roleSelect.value;
+    const selectedDept = deptSelect.value;
+
+    const filtered = JSON.parse(JSON.stringify(data));
+    filtered.children = filtered.children
+      .map(dept => filterNode(dept, selectedRole, selectedDept))
+      .filter(Boolean);
+
+    const dynamicColors = generateColorScaleFromTree(filtered);
+    currentColorScale = d => dynamicColors(d); // Update global
+
+    // Update legend
+    legend.innerHTML = "";
+
+    if (selectedDept && filtered.children.length === 1 && !selectedRole) {
+      // Show HEADS of that department
+      const heads = filtered.children[0].children || [];
+      const headNames = heads.map(d => d.name);
+      const colorScale = d3.scaleOrdinal()
+        .domain(headNames)
+        .range(d3.schemeCategory10);
+
+      currentColorScale = d => colorScale(d.name);
+
+      headNames.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "legend-item";
+        div.innerHTML = `<span class="legend-color" style="background-color: ${colorScale(name)};"></span> ${name}`;
+        legend.appendChild(div);
+      });
+
+    } else {
+      // Default: show departments
+      Array.from(dynamicColors.domain()).forEach(dept => {
+        const div = document.createElement("div");
+        div.className = "legend-item";
+        div.innerHTML = `<span class="legend-color" style="background-color: ${dynamicColors(dept)};"></span> ${dept}`;
+        legend.appendChild(div);
+      });
+    }
+
+    // === Adjust root based on department filter ===
+    let chartData;
+
+    // If just one department remains and no role filter is used,
+    // we use that department head *directly* as root.
+    if (selectedDept && filtered.children.length === 1 && !selectedRole) {
+      chartData = filtered.children[0]; // No wrapper!
+    } else {
+      chartData = {
+        name: selectedDept || "Company",
+        children: filtered.children
+      };
+    }
+    // 👉 Recalculate depth and inject it for renderChart
+    const filteredRoot = d3.hierarchy(chartData);
+    const depth = getMaxDepth(filteredRoot.data); // or filteredRoot if needed
+
+    // Optional: Set a global or pass as param
+    chartData._calculatedDepth = depth;
+    currentData = chartData; 
+
+    chartData.spouseLinks = allSpouseLinks; // attach to root, even if it's just one dept
+    renderChart(chartData, currentColorScale);
+  }
+
+  roleSelect.addEventListener("change", applyFilters);
+  deptSelect.addEventListener("change", applyFilters);
+}
+</script>
+</body>
+</html>
